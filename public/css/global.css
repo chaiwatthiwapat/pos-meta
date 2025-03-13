@@ -1,0 +1,11 @@
+/* .spin-none: input type number ซ่อน spin */
+
+.spin-none::-webkit-inner-spin-button,
+.spin-none::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.spin-none {
+    -moz-appearance: textfield;
+}
