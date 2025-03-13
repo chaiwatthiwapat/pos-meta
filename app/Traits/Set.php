@@ -16,7 +16,7 @@ trait Set
         $ext = self::fileExt($file);
         $time = time();
         $uniqid = uniqid();
-        return "product{$uniqid}{$time}.{$ext}";
+        return "{$uniqid}{$time}.{$ext}";
     }
 
     public static function number(?string $number): float {
@@ -37,8 +37,8 @@ trait Set
     }
 
     // @ตัด tag ออก เช่น (div | script | style)
-    public static function string(string $string): string {
-        return htmlspecialchars(strip_tags($string), ENT_QUOTES, 'UTF-8');
+    public static function string(?string $string): string {
+        return $string ? htmlspecialchars(strip_tags($string), ENT_QUOTES, 'UTF-8') : '';
     }
 }
 

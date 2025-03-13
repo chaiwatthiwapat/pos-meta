@@ -4,13 +4,16 @@ use App\Livewire\Home\HomeIndex;
 use App\Livewire\Orders\OrdersIndex;
 use App\Livewire\Pos\PosIndex;
 use App\Livewire\Product\ProductIndex;
+use App\Livewire\Size\SizeIndex;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', HomeIndex::class)->name('home.index');
 Route::get('/pos', PosIndex::class)->name('pos.index');
 Route::get('/orders', OrdersIndex::class)->name('orders.index');
 Route::get('/product', ProductIndex::class)->name('product.index');
+Route::get('/size', SizeIndex::class)->name('size.index');
 
 Route::get('/storageLink', function () {
     $storagePath = storage_path('app/public');

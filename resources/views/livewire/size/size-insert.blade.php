@@ -12,7 +12,7 @@
 
         {{-- หัวข้อ --}}
         <h2 data-modal-header class="text-xl font-bold mb-4 text-gray-800 text-center">
-            เพิ่มสินค้า
+            เพิ่ม
         </h2>
 
         <form wire:submit="insert">
@@ -25,33 +25,18 @@
                 </div>
             @endif
 
-            {{-- ชื่อสินค้า --}}
+            {{-- ชื่อ --}}
             <div class="mb-4">
                 <label class="text-gray-600 font-medium">ชื่อ</label>
-                <input wire:model="productName" type="text"
+                <input wire:model="sizeName" type="text"
                     class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none">
             </div>
 
             {{-- ราคา --}}
             <div class="mb-4">
                 <label class="text-gray-600 font-medium">ราคา</label>
-                <input wire:model="productPrice" type="number"
+                <input wire:model="sizePrice" type="number"
                     class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none spin-none">
-            </div>
-
-            {{-- อัพโหลดรูป --}}
-            <div x-data="{ previewImage: @entangle('previewImage') }" class="mb-4">
-                <label class="text-gray-600 font-medium">ภาพสินค้า</label>
-                <input wire:model="productImage" type="file"
-                    class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none"
-                    x-on:change="if(file = $event.target.files[0]) previewImage = URL.createObjectURL(file)"
-                    accept="image/*">
-
-                <!-- Preview รูป -->
-                <div x-show="previewImage" class="mt-3 flex justify-center">
-                    <img :src="previewImage" alt="Preview Image"
-                        class="w-32 h-32 object-cover border rounded-lg shadow-md">
-                </div>
             </div>
 
             {{-- ปุ่มต่าง ๆ --}}

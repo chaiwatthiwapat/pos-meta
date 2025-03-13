@@ -33,16 +33,17 @@ class ProductIndex extends Component
     public function insert(): void {
         $this->productName = Set::string($this->productName);
 
+        $tbProduct = Table::$product;
         $this->validate([
-            'productName' => 'required|string|max:20|unique:product,name',
+            'productName' => "required|string|max:20|unique:{$tbProduct},name",
             'productPrice' => 'required|max:7',
             'productImage' => 'required|image|max:12288'
         ], [
-            'productName.required' => 'กรอกชื่อสินค้า',
+            'productName.required' => 'กรอกชื่อ',
             'productName.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
             'productName.max' => 'ชื่อสูงสุด 20 ตัว',
-            'productName.unique' => 'ชื่อสินค้านี้มีอยู่แล้ว',
-            'productPrice.required' => 'กรอกราคาสินค้า',
+            'productName.unique' => 'ชื่อนี้มีอยู่แล้ว',
+            'productPrice.required' => 'กรอกราคา',
             'productPrice.max' => 'ราคาสูงสุด (9999.99)',
             'productImage.required' => 'เพิ่มภาพ',
             'productImage.image' => 'ไฟล์ภาพเท่านั้น',
@@ -50,7 +51,7 @@ class ProductIndex extends Component
         ]);
 
         try {
-            $productImageName = Set::newFileName($this->productImage);
+            $productImageName = 'product'.Set::newFileName($this->productImage);
 
             DB::table(Table::$product)
                 ->insert([
@@ -62,13 +63,13 @@ class ProductIndex extends Component
 
             $this->productImage->storeAs('product-images', $productImageName, 'public');
 
-            $this->dispatch('alert', ['message' => '<div class="text-green-700">เพิ่มสินค้าสำเร็จ</div>']);
+            $this->dispatch('alert', ['message' => '<div class="text-green-700">เพิ่มสำเร็จ</div>']);
             $this->clearFormInsert();
             $this->dispatch('hidden-insert');
         }
         catch(\Exception $e) {
             $message = <<<HTML
-                <div class="text-gray-600">เพิ่มสินค้า</div>
+                <div class="text-gray-600">เพิ่ม</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
                 <div class="text-red-700">กรุณาลองใหม่</div>
             HTML;
@@ -89,18 +90,18 @@ class ProductIndex extends Component
     public function delete(?int $id = null): void {
         try {
             DB::table(Table::$product)->where('id', $id)->delete();
-            $this->dispatch('alert', ['message' => '<div class="text-green-700">ลบสินค้าสำเร็จ</div>']);
-            $this->dispatch('product-delete-hide');
+            $this->dispatch('alert', ['message' => '<div class="text-green-700">ลบสำเร็จ</div>']);
+            $this->dispatch('hidden-delete');
         }
         catch(\Exception $e) {
             $message = <<<HTML
-                <div class="text-gray-600">ลบสินค้า</div>
+                <div class="text-gray-600">ลบ</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
                 <div class="text-red-700">กรุณาลองใหม่</div>
             HTML;
             $this->dispatch('alert', ['message' => $message]);
 
-            $this->dispatch('product-delete-hide');
+            $this->dispatch('hidden-delete');
         }
     }
     // @end delete
@@ -131,16 +132,17 @@ class ProductIndex extends Component
     public function update(): void {
         $this->productNameEdit = Set::string($this->productNameEdit);
 
+        $tbProduct = Table::$product;
         $this->validate([
-            'productNameEdit' => "required|string|max:20|unique:product,name,$this->editId,id",
+            'productNameEdit' => "required|string|max:20|unique:{$tbProduct},name,$this->editId,id",
             'productPriceEdit' => 'required|max:7',
             'productImageEdit' => 'nullable|image|max:12288'
         ], [
-            'productNameEdit.required' => 'กรอกชื่อสินค้า',
+            'productNameEdit.required' => 'กรอกชื่อ',
             'productNameEdit.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
             'productNameEdit.max' => 'ชื่อสูงสุด 20 ตัว',
-            'productNameEdit.unique' => 'ชื่อสินค้านี้มีอยู่แล้ว',
-            'productPriceEdit.required' => 'กรอกราคาสินค้า',
+            'productNameEdit.unique' => 'ชื่อนี้มีอยู่แล้ว',
+            'productPriceEdit.required' => 'กรอกราคา',
             'productPriceEdit.max' => 'ราคาสูงสุด (9999.99)',
             'productImageEdit.image' => 'ไฟล์ภาพเท่านั้น',
             'productImageEdit.max:12288' => 'สูงสุด 12MB',
@@ -149,7 +151,7 @@ class ProductIndex extends Component
         try {
             $productImage = $this->oldProductImageName;
             if(!empty($this->productImageEdit)) {
-                $productImage = Set::newFileName($this->productImageEdit);
+                $productImage = 'prodcut'.Set::newFileName($this->productImageEdit);
             }
 
             DB::table(Table::$product)
@@ -165,13 +167,13 @@ class ProductIndex extends Component
                 $this->productImageEdit->storeAs('product-images', $productImage, 'public');
             }
 
-            $this->dispatch('alert', ['message' => '<div class="text-green-700">อัพเดทสินค้าสำเร็จ</div>']);
+            $this->dispatch('alert', ['message' => '<div class="text-green-700">อัพเดทสำเร็จ</div>']);
             $this->clearFormEdit();
             $this->dispatch('hidden-edit');
         }
         catch(\Exception $e) {
             $message = <<<HTML
-                <div class="text-gray-600">อัพเดทสินค้า</div>
+                <div class="text-gray-600">อัพเดท</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
                 <div class="text-red-700">กรุณาลองใหม่</div>
             HTML;

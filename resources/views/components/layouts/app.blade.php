@@ -19,12 +19,12 @@
             </nav>
 
             <div class="flex">
-                <aside :class="{ 'ml-[-230px]': !showSidebar }" class="transition-all duration-200">
+                <aside :class="{ 'ml-[-260px]': !showSidebar }" class="transition-all duration-200">
                     @livewire('layouts.sidebar')
                 </aside>
 
                 <main class="p-6 w-full h-[calc(100vh-50px)]">
-                    @include('alert')
+                    @include('components.alert')
 
                     {{ $slot }}
                 </main>

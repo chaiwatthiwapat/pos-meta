@@ -10,11 +10,8 @@
                         </button>
                     </div>
                 </th>
-                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-center text-xs font-semibold" style="width: 100px !important;">
-                    ภาพ
-                </th>
                 <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-start text-xs font-semibold" style="width: 200px !important;">
-                    สินค้า
+                    ไซต์
                 </th>
                 <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-right text-xs font-semibold" style="width: 50px !important;">
                     <div class="flex items-center gap-1 justify-end">
@@ -30,13 +27,10 @@
 
         <tbody>
 
-            @foreach($productData as $row)
+            @foreach($sizeData as $row)
                 <tr>
                     <td class="w-[20px] px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                         {{ $loop->iteration }}
-                    </td>
-                    <td class="px-5 py-3 border-b-2 border-blue-200 text-left text-xs font-semibold text-gray-700">
-                        <img class="w-[50px] h-[50px] object-cover mx-auto" src="{{ asset("storage/product-images/$row->image") }}" alt="product">
                     </td>
                     <td class="px-5 py-3 border-b-2 border-blue-200 text-start text-xs font-semibold text-gray-700">
                         {{ Str::limit($row->name, 20, '...') }}
