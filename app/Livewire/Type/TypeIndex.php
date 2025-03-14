@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Livewire\Size;
+namespace App\Livewire\Type;
 
 use App\Traits\Set;
 use App\Traits\Table;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class SizeIndex extends Component
+class TypeIndex extends Component
 {
     use Table;
     use Set;
@@ -26,9 +26,9 @@ class SizeIndex extends Component
     public function insert(): void {
         $this->name = Set::string($this->name);
 
-        $tbSize = Table::$size;
+        $tbType = Table::$type;
         $this->validate([
-            'name' => "required|string|max:20|unique:{$tbSize},name",
+            'name' => "required|string|max:20|unique:{$tbType},name",
             'price' => 'required|max:7',
         ], [
             'name.required' => 'กรอกชื่อ',
@@ -40,7 +40,7 @@ class SizeIndex extends Component
         ]);
 
         try {
-            DB::table(Table::$size)
+            DB::table(Table::$type)
                 ->insert([
                     'name' => $this->name,
                     'price' => Set::number($this->price),
@@ -73,7 +73,7 @@ class SizeIndex extends Component
     // @delete
     public function delete(?int $id = null): void {
         try {
-            DB::table(Table::$size)->where('id', $id)->delete();
+            DB::table(Table::$type)->where('id', $id)->delete();
             $this->dispatch('alert', ['message' => '<div class="text-green-700">ลบสำเร็จ</div>']);
             $this->dispatch('hidden-delete');
         }
@@ -92,7 +92,7 @@ class SizeIndex extends Component
 
     // @edit
     public function edit(?int $id = null): void {
-        $query = DB::table(Table::$size)->where('id', $id)->first();
+        $query = DB::table(Table::$type)->where('id', $id)->first();
 
         $this->editId = $id;
         $this->nameEdit = $query?->name;
@@ -111,9 +111,9 @@ class SizeIndex extends Component
     public function update(): void {
         $this->nameEdit = Set::string($this->nameEdit);
 
-        $tbSize = Table::$size;
+        $tbType = Table::$type;
         $this->validate([
-            'nameEdit' => "required|string|max:20|unique:{$tbSize},name,$this->editId,id",
+            'nameEdit' => "required|string|max:20|unique:{$tbType},name,$this->editId,id",
             'priceEdit' => 'required|max:7',
         ], [
             'nameEdit.required' => 'กรอกชื่อ',
@@ -125,7 +125,7 @@ class SizeIndex extends Component
         ]);
 
         try {
-            DB::table(Table::$size)
+            DB::table(Table::$type)
                 ->where('id', $this->editId)
                 ->update([
                     'name' => $this->nameEdit,
@@ -155,8 +155,8 @@ class SizeIndex extends Component
 
     public function render()
     {
-        return view('livewire.size.size-index', [
-            'sizeData' => DB::table(Table::$size)->latest()->paginate($this->paginate)
+        return view('livewire.type.type-index', [
+            'data' => DB::table(Table::$type)->latest()->paginate($this->paginate)
         ]);
     }
 }

@@ -15,53 +15,53 @@ class ProductIndex extends Component
     use Set;
     use Table;
 
-    public ?UploadedFile $productImage = null;
+    public ?UploadedFile $image = null;
     public ?string $previewImage = '';
-    public string $productName = '';
-    public string $productPrice = '';
+    public string $name = '';
+    public string $price = '';
     public int $paginate = 10;
     public bool $priceDecimal = false;
 
     public ?int $editId = null;
-    public ?UploadedFile $productImageEdit = null;
+    public ?UploadedFile $imageEdit = null;
     public ?string $previewImageEdit = '';
-    public ?string $oldProductImageName = '';
-    public ?string $productNameEdit = '';
-    public ?string $productPriceEdit = '';
+    public ?string $oldImageName = '';
+    public ?string $nameEdit = '';
+    public ?string $priceEdit = '';
 
     // @insert
     public function insert(): void {
-        $this->productName = Set::string($this->productName);
+        $this->name = Set::string($this->name);
 
         $tbProduct = Table::$product;
         $this->validate([
-            'productName' => "required|string|max:20|unique:{$tbProduct},name",
-            'productPrice' => 'required|max:7',
-            'productImage' => 'required|image|max:12288'
+            'name' => "required|string|max:20|unique:{$tbProduct},name",
+            'price' => 'required|max:7',
+            'image' => 'required|image|max:12288'
         ], [
-            'productName.required' => 'กรอกชื่อ',
-            'productName.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
-            'productName.max' => 'ชื่อสูงสุด 20 ตัว',
-            'productName.unique' => 'ชื่อนี้มีอยู่แล้ว',
-            'productPrice.required' => 'กรอกราคา',
-            'productPrice.max' => 'ราคาสูงสุด (9999.99)',
-            'productImage.required' => 'เพิ่มภาพ',
-            'productImage.image' => 'ไฟล์ภาพเท่านั้น',
-            'productImage.max:12288' => 'สูงสุด 12MB',
+            'name.required' => 'กรอกชื่อ',
+            'name.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
+            'name.max' => 'ชื่อสูงสุด 20 ตัว',
+            'name.unique' => 'ชื่อนี้มีอยู่แล้ว',
+            'price.required' => 'กรอกราคา',
+            'price.max' => 'ราคาสูงสุด (9999.99)',
+            'image.required' => 'เพิ่มภาพ',
+            'image.image' => 'ไฟล์ภาพเท่านั้น',
+            'image.max:12288' => 'สูงสุด 12MB',
         ]);
 
         try {
-            $productImageName = 'product'.Set::newFileName($this->productImage);
+            $imageName = 'product'.Set::newFileName($this->image);
 
             DB::table(Table::$product)
                 ->insert([
-                    'name' => $this->productName,
-                    'price' => Set::number($this->productPrice),
-                    'image' => $productImageName,
+                    'name' => $this->name,
+                    'price' => Set::number($this->price),
+                    'image' => $imageName,
                     'created_at' => now()
                 ]);
 
-            $this->productImage->storeAs('product-images', $productImageName, 'public');
+            $this->image->storeAs('product-images', $imageName, 'public');
 
             $this->dispatch('alert', ['message' => '<div class="text-green-700">เพิ่มสำเร็จ</div>']);
             $this->clearFormInsert();
@@ -78,9 +78,9 @@ class ProductIndex extends Component
     }
 
     public function clearFormInsert(): void {
-        $this->productName = '';
-        $this->productPrice = '';
-        $this->productImage = null;
+        $this->name = '';
+        $this->price = '';
+        $this->image = null;
         $this->previewImage = '';
         $this->clearErrors();
     }
@@ -111,60 +111,60 @@ class ProductIndex extends Component
         $query = DB::table(Table::$product)->where('id', $id)->first();
 
         $this->editId = $id;
-        $this->productNameEdit = $query?->name;
-        $this->productPriceEdit = $query?->price;
-        $this->productPriceEdit = $query?->price;
+        $this->nameEdit = $query?->name;
+        $this->priceEdit = $query?->price;
+        $this->priceEdit = $query?->price;
         $this->previewImageEdit = "/storage/product-images/{$query?->image}";
-        $this->oldProductImageName = $query?->image;
+        $this->oldImageName = $query?->image;
     }
 
     public function clearFormEdit(): void {
-        $this->productNameEdit = '';
-        $this->productPriceEdit = '';
-        $this->productImageEdit = null;
+        $this->nameEdit = '';
+        $this->priceEdit = '';
+        $this->imageEdit = null;
         $this->previewImageEdit = '';
-        $this->oldProductImageName = '';
+        $this->oldImageName = '';
         $this->clearErrors();
     }
     // @end edit
 
     // @update
     public function update(): void {
-        $this->productNameEdit = Set::string($this->productNameEdit);
+        $this->nameEdit = Set::string($this->nameEdit);
 
         $tbProduct = Table::$product;
         $this->validate([
-            'productNameEdit' => "required|string|max:20|unique:{$tbProduct},name,$this->editId,id",
-            'productPriceEdit' => 'required|max:7',
-            'productImageEdit' => 'nullable|image|max:12288'
+            'nameEdit' => "required|string|max:20|unique:{$tbProduct},name,$this->editId,id",
+            'priceEdit' => 'required|max:7',
+            'imageEdit' => 'nullable|image|max:12288'
         ], [
-            'productNameEdit.required' => 'กรอกชื่อ',
-            'productNameEdit.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
-            'productNameEdit.max' => 'ชื่อสูงสุด 20 ตัว',
-            'productNameEdit.unique' => 'ชื่อนี้มีอยู่แล้ว',
-            'productPriceEdit.required' => 'กรอกราคา',
-            'productPriceEdit.max' => 'ราคาสูงสุด (9999.99)',
-            'productImageEdit.image' => 'ไฟล์ภาพเท่านั้น',
-            'productImageEdit.max:12288' => 'สูงสุด 12MB',
+            'nameEdit.required' => 'กรอกชื่อ',
+            'nameEdit.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
+            'nameEdit.max' => 'ชื่อสูงสุด 20 ตัว',
+            'nameEdit.unique' => 'ชื่อนี้มีอยู่แล้ว',
+            'priceEdit.required' => 'กรอกราคา',
+            'priceEdit.max' => 'ราคาสูงสุด (9999.99)',
+            'imageEdit.image' => 'ไฟล์ภาพเท่านั้น',
+            'imageEdit.max:12288' => 'สูงสุด 12MB',
         ]);
 
         try {
-            $productImage = $this->oldProductImageName;
-            if(!empty($this->productImageEdit)) {
-                $productImage = 'prodcut'.Set::newFileName($this->productImageEdit);
+            $image = $this->oldImageName;
+            if(!empty($this->imageEdit)) {
+                $image = 'prodcut'.Set::newFileName($this->imageEdit);
             }
 
             DB::table(Table::$product)
                 ->where('id', $this->editId)
                 ->update([
-                    'name' => $this->productNameEdit,
-                    'price' => Set::number($this->productPriceEdit),
-                    'image' => $productImage,
+                    'name' => $this->nameEdit,
+                    'price' => Set::number($this->priceEdit),
+                    'image' => $image,
                     'updated_at' => now()
                 ]);
 
-            if(!empty($this->productImageEdit)) {
-                $this->productImageEdit->storeAs('product-images', $productImage, 'public');
+            if(!empty($this->imageEdit)) {
+                $this->imageEdit->storeAs('product-images', $image, 'public');
             }
 
             $this->dispatch('alert', ['message' => '<div class="text-green-700">อัพเดทสำเร็จ</div>']);

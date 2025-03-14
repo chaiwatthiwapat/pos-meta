@@ -16,7 +16,7 @@
                 <div class="max-w-[150px] max-h-[150px] aspect-square overflow-hidden rounded-lg border border-gray-200 shadow-md flex items-center justify-center">
                     <img class="w-full h-full object-cover" src="{{ asset('storage/product-images/' . ($productModalData?->image ?? 'default.png')) }}" alt="pos product">
                 </div>
-            
+
                 <div class="flex flex-col justify-between w-full">
                     <div>
                         <div class="text-gray-600 text-sm">จำนวน</div>
@@ -26,28 +26,28 @@
                             <button x-on:click="qty++" class="select-none px-3 py-2 bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300 duration-200">+</button>
                         </div>
                     </div>
-            
+
                     <div class="px-4 py-3 bg-blue-50 text-blue-600 font-semibold rounded-lg">
                         <span>ราคา:</span>
                         <span x-text="(price * qty).toLocaleString()"></span>
                     </div>
                 </div>
             </div>
-            
+
             @include('livewire.pos.pos-product-size')
             @include('livewire.pos.pos-product-type')
             @include('livewire.pos.pos-product-topping')
         </div>
 
         <div class="mt-4 flex justify-end gap-1">
-            <button x-on:click="showModalProduct = false" class="bg-blue-200 text-blue-500 hover:bg-blue-100 duration-200 px-3 py-2 rounded">
+            <button x-on:click="showModalProduct = false" class="bg-blue-200 text-blue-500 hover:bg-blue-100 duration-200 px-5 py-2 rounded-lg">
                 ปิด
             </button>
 
             <button
                 x-on:click="
                     let items = JSON.parse(localStorage.getItem('cartItem')) || [];
-                    items.push({ id: id, name: name, qty: qty, price: price });
+                    items.push({ id: id, name: name, qty: qty, price: price, amount: qty * price });
                     localStorage.setItem('cartItem', JSON.stringify(items));
 
                     showModalProduct = false;
@@ -55,7 +55,7 @@
                     $store.alertMessage.message = '<span class=\'text-green-700\'>เพิ่มแล้ว</span>';
                     $store.alert.showAlert = true;
                 "
-                class="bg-blue-500 text-white hover:bg-blue-400 duration-200 px-3 py-2 rounded"
+                class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-2 rounded-lg font-medium flex items-center justify-center min-w-[80px]"
             >
                 ตกลง
             </button>

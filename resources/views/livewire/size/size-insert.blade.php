@@ -28,14 +28,14 @@
             {{-- ชื่อ --}}
             <div class="mb-4">
                 <label class="text-gray-600 font-medium">ชื่อ</label>
-                <input wire:model="sizeName" type="text"
+                <input wire:model="name" type="text"
                     class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none">
             </div>
 
             {{-- ราคา --}}
             <div class="mb-4">
                 <label class="text-gray-600 font-medium">ราคา</label>
-                <input wire:model="sizePrice" type="number"
+                <input wire:model="price" type="number"
                     class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none spin-none">
             </div>
 

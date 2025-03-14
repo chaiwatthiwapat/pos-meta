@@ -2,7 +2,7 @@
     <table x-data="{ showDecimal: false }" class="table-auto w-full">
         <thead class="sticky top-0 z-[1000]">
             <tr>
-                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-left font-semibold w-fit">
+                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-left font-semibold w-[110px]">
                     <div class="w-fit">
                         <button x-on:click="showInsert = true; $wire.call('clearErrors')"
                             class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs">
@@ -10,16 +10,15 @@
                         </button>
                     </div>
                 </th>
-                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-center text-xs font-semibold" style="width: 100px !important;">
-                    ภาพ
-                </th>
                 <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-start text-xs font-semibold" style="width: 200px !important;">
-                    สินค้า
+                    ประเภท
                 </th>
                 <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-right text-xs font-semibold" style="width: 50px !important;">
                     <div class="flex items-center gap-1 justify-end">
                         <input x-on:change="showDecimal = !showDecimal" checked id="price-decimal" type="checkbox" class="cursor-pointer">
-                        <label for="price-decimal" class="cursor-pointer select-none">ราคา</label>
+                        <label for="price-decimal" class="cursor-pointer select-none">
+                            ราคา
+                        </label>
                     </div>
                 </th>
                 <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-center text-xs font-semibold">
@@ -30,13 +29,10 @@
 
         <tbody>
 
-            @foreach($productData as $row)
+            @foreach($data as $row)
                 <tr>
                     <td class="w-[20px] px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                         {{ $loop->iteration }}
-                    </td>
-                    <td class="px-5 py-3 border-b-2 border-blue-200 text-left text-xs font-semibold text-gray-700">
-                        <img class="w-[50px] h-[50px] object-cover mx-auto" src="{{ asset("storage/product-images/$row->image") }}" alt="product">
                     </td>
                     <td class="px-5 py-3 border-b-2 border-blue-200 text-start text-xs font-semibold text-gray-700">
                         {{ Str::limit($row->name, 20, '...') }}

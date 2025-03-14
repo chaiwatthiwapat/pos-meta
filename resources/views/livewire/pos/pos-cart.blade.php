@@ -1,11 +1,17 @@
-<div class="flex-grow bg-white p-3 rounded border">
-    <div x-data="{
+<div
+    x-data="{
         data: JSON.parse(localStorage.getItem('cartItem')) || [],
         updateLocalStorage() {
             localStorage.setItem('cartItem', JSON.stringify(this.data));
         },
-    }" x-init="$store.cart = $data" class="h-[500px] overflow-auto">
-
+        get amount() {
+            return this.data.reduce((sum, item) => sum + (item.amount || 0), 0);
+        }
+    }"
+    x-init="$store.cart = $data"
+    class="flex-grow bg-white p-3 rounded border">
+    {{--  --}}
+    <div class="h-[500px] overflow-auto">
         <table class="w-full">
             <thead class="sticky top-0">
                 <thead class="sticky top-0 bg-blue-100 shadow-md">
@@ -29,7 +35,7 @@
                             <span x-text="item.name"></span>
                         </td>
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-right text-xs font-semibold text-gray-700">
-                            <span x-text="item.price"></span>
+                            <span x-text="item.amount"></span>
                         </td>
                         <td class="px-5 py-3 border-b-2 border-blue-200">
                             <div class="flex items-center justify-center text-xs font-semibold text-gray-700">
@@ -38,6 +44,7 @@
                                 <button
                                     x-on:click="
                                         data[index].qty > 1 ? data[index].qty-- : null;
+                                        data[index].amount = data[index].qty * data[index].price;
                                         updateLocalStorage();
                                     "
                                     class="px-2 py-1 bg-blue-200 text-blue-700 rounded hover:bg-blue-300 duration-200">
@@ -50,6 +57,7 @@
                                 <button
                                     x-on:click="
                                         data[index].qty++;
+                                        data[index].amount = data[index].qty * data[index].price;
                                         updateLocalStorage();
                                     "
                                     class="px-2 py-1 bg-blue-200 text-blue-700 rounded hover:bg-blue-300 duration-200">
@@ -63,23 +71,25 @@
                                 data.splice(index, 1);
                                 updateLocalStorage();
                             "
-                            class="bg-red-200 text-red-700 hover:bg-red-300 duration-200 px-3 py-2 rounded">
+                            class="bg-red-500 text-white hover:bg-red-600 duration-200 px-3 py-2 rounded-lg font-medium flex items-center justify-center mx-auto">
                                 ลบ
                             </button>
                         </td>
                     </tr>
                 </template>
             </tbody>
-
-
         </table>
     </div>
 
-    <div class="p-2 border border-blue-200 text-center my-4">
-        รายการ: <strong class="text-blue-500">12</strong>
+    <div class="px-5 py-3 rounded-lg border border-blue-200 text-center my-4">
+        รายการ:
+        <strong
+            class="text-blue-500"
+            x-text="amount">
+        </strong>
     </div>
     <div>
-        <button class="bg-blue-500 text-white hover:bg-blue-400 duration-200 px-3 py-2 rounded w-full">
+        <button class="bg-blue-600 text-white hover:bg-blue-500 transition duration-200 px-4 py-3 rounded-lg w-full font-semibold shadow-md">
             ดำเนินการต่อ
         </button>
     </div>

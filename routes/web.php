@@ -5,6 +5,8 @@ use App\Livewire\Orders\OrdersIndex;
 use App\Livewire\Pos\PosIndex;
 use App\Livewire\Product\ProductIndex;
 use App\Livewire\Size\SizeIndex;
+use App\Livewire\Topping\ToppingIndex;
+use App\Livewire\Type\TypeIndex;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,8 @@ Route::get('/pos', PosIndex::class)->name('pos.index');
 Route::get('/orders', OrdersIndex::class)->name('orders.index');
 Route::get('/product', ProductIndex::class)->name('product.index');
 Route::get('/size', SizeIndex::class)->name('size.index');
+Route::get('/type', TypeIndex::class)->name('type.index');
+Route::get('/topping', ToppingIndex::class)->name('topping.index');
 
 Route::get('/storageLink', function () {
     $storagePath = storage_path('app/public');

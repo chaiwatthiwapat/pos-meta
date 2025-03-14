@@ -5,6 +5,8 @@
                 ['route' => 'home.index', 'label' => 'Home'],
                 ['route' => 'product.index', 'label' => 'Product'],
                 ['route' => 'size.index', 'label' => 'Size'],
+                ['route' => 'type.index', 'label' => 'Type'],
+                ['route' => 'topping.index', 'label' => 'Topping'],
                 ['route' => 'pos.index', 'label' => 'POS'],
                 ['route' => 'orders.index', 'label' => 'Orders'],
             ];

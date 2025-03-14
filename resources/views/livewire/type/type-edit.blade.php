@@ -3,6 +3,7 @@
     style="display: none"
     class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[2000] transition-opacity duration-300">
 
+    {{--  --}}
     <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-lg relative">
 
         {{-- ปุ่มปิด Modal --}}
@@ -13,7 +14,7 @@
 
         {{-- หัวข้อ --}}
         <h2 data-modal-header class="text-xl font-bold mb-4 text-gray-800 text-center">
-            แก้ไขไซต์
+            แก้ไขประเภท
         </h2>
 
         <form wire:submit="update">
@@ -26,9 +27,9 @@
                 </div>
             @endif
 
-            {{-- ชื่อไซต์ --}}
+            {{-- ชื่อประเภท --}}
             <div class="mb-4">
-                <label class="text-gray-600 font-medium">ไซต์</label>
+                <label class="text-gray-600 font-medium">ประเภท</label>
                 <input wire:model="nameEdit" type="text"
                     class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none">
             </div>
