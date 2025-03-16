@@ -42,7 +42,7 @@
 
             {{-- ปุ่มต่าง ๆ --}}
             <div class="flex justify-between gap-2">
-                <button type="button" wire:click="clearFormInsert"
+                <button type="button" wire:click="clearForm"
                     class="bg-red-100 text-red-500 hover:bg-red-200 duration-200 px-4 py-2 rounded-lg font-medium">
                     ล้าง
                 </button>

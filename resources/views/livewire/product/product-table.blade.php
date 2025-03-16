@@ -4,7 +4,7 @@
             <tr>
                 <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-left font-semibold w-fit">
                     <div class="w-fit">
-                        <button x-on:click="showInsert = true; $wire.call('clearErrors')"
+                        <button x-on:click="showInsert = true; $wire.call('clearForm')"
                             class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs">
                             เพิ่ม
                         </button>
@@ -47,7 +47,7 @@
                     </td>
                     <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                         <div class="flex justify-end gap-1">
-                            <button x-on:click="showEdit = true; $wire.call('clearErrors'); $wire.call('edit', {{ $row->id }})"
+                            <button x-on:click="showEdit = true; $wire.call('clearForm'); $wire.call('edit', {{ $row->id }})"
                                 class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center">
                                 แก้ไข
                             </button>

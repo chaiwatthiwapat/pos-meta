@@ -16,14 +16,15 @@ class UserIndex extends Component
     use Set;
     use Table;
 
+    public int $paginate = 10;
+
+    // @model
+    public ?int $id = null;
     public ?UploadedFile $image = null;
     public ?string $previewImage = '';
     public string $name = '';
     public string $password = '';
     public string $password_confirmation = '';
-    public int $paginate = 10;
-    public ?int $editId = null;
-    public ?string $oldImageName = '';
 
     // @insert
     public function insert(): void {
@@ -70,7 +71,6 @@ class UserIndex extends Component
             $this->dispatch('hidden-insert');
         }
         catch(\Exception $e) {
-            throw $e;
             $message = <<<HTML
                 <div class="text-gray-600">เพิ่ม</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
@@ -83,21 +83,27 @@ class UserIndex extends Component
     public function clearForm(): void {
         $this->name = '';
         $this->password = '';
+        $this->password_confirmation = '';
         $this->image = null;
         $this->previewImage = '';
-        $this->oldImageName = '';
         $this->clearErrors();
     }
     // @end insert
 
     // @delete
     public function delete(?int $id = null): void {
+        DB::beginTransaction();
+
         try {
             DB::table(Table::$user)->where('id', $id)->delete();
             $this->dispatch('alert', ['message' => '<div class="text-green-700">ลบสำเร็จ</div>']);
             $this->dispatch('hidden-delete');
+
+            DB::commit();
         }
         catch(\Exception $e) {
+            DB::rollBack();
+            
             $message = <<<HTML
                 <div class="text-gray-600">ลบ</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
@@ -115,10 +121,9 @@ class UserIndex extends Component
         $query = DB::table(Table::$user)->where('id', $id)->first();
 
         $oldImage = $query?->image ?? 'default.png';
-        $this->editId = $id;
+        $this->id = $id;
         $this->name = $query?->name;
-        $this->previewImage = "/storage/user-images/$oldImage";
-        $this->oldImageName = $query?->image;
+        $this->previewImage = "/storage/user-images/{$oldImage}";
         $this->password = '';
         $this->password_confirmation = '';
     }
@@ -130,7 +135,7 @@ class UserIndex extends Component
 
         $tbUser = Table::$user;
         $this->validate([
-            'name' => "required|string|max:20|unique:{$tbUser},name,$this->editId,id",
+            'name' => "required|string|max:20|unique:{$tbUser},name,$this->id,id",
             'password' => 'nullable|string|min:6|max:16|confirmed',
             'image' => 'nullable|image|max:12288'
         ], [
@@ -144,6 +149,8 @@ class UserIndex extends Component
             'image.image' => 'ไฟล์ภาพเท่านั้น',
             'image.max' => 'สูงสุด 12MB',
         ]);
+
+        DB::beginTransaction();
 
         try {
             $update = [
@@ -160,17 +167,21 @@ class UserIndex extends Component
                 $update = array_merge($update, ['image' => $image]);
             }
 
-            DB::table(Table::$user)->where('id', $this->editId)->update($update);
+            DB::table(Table::$user)->where('id', $this->id)->update($update);
 
-            if(!empty($this->image)) {
+            if($this->image) {
                 $this->image->storeAs('user-images', $image, 'public');
             }
 
             $this->dispatch('alert', ['message' => '<div class="text-green-700">อัพเดทสำเร็จ</div>']);
             $this->clearForm();
             $this->dispatch('hidden-edit');
+
+            DB::commit();
         }
         catch(\Exception $e) {
+            DB::rollBack();
+            throw $e;
             $message = <<<HTML
                 <div class="text-gray-600">อัพเดท</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>

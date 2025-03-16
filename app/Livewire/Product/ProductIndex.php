@@ -15,19 +15,14 @@ class ProductIndex extends Component
     use Set;
     use Table;
 
+    public int $paginate = 10;
+
+    // @model
+    public ?int $id = null;
     public ?UploadedFile $image = null;
     public ?string $previewImage = '';
     public string $name = '';
     public string $price = '';
-    public int $paginate = 10;
-    public bool $priceDecimal = false;
-
-    public ?int $editId = null;
-    public ?UploadedFile $imageEdit = null;
-    public ?string $previewImageEdit = '';
-    public ?string $oldImageName = '';
-    public ?string $nameEdit = '';
-    public ?string $priceEdit = '';
 
     // @insert
     public function insert(): void {
@@ -36,7 +31,7 @@ class ProductIndex extends Component
         $tbProduct = Table::$product;
         $this->validate([
             'name' => "required|string|max:20|unique:{$tbProduct},name",
-            'price' => 'required|max:7',
+            'price' => 'required|numeric|max:9999',
             'image' => 'required|image|max:12288'
         ], [
             'name.required' => 'กรอกชื่อ',
@@ -44,11 +39,14 @@ class ProductIndex extends Component
             'name.max' => 'ชื่อสูงสุด 20 ตัว',
             'name.unique' => 'ชื่อนี้มีอยู่แล้ว',
             'price.required' => 'กรอกราคา',
-            'price.max' => 'ราคาสูงสุด (9999.99)',
+            'price.max' => 'ราคาสูงสุด (9999)',
+            'price.numeric' => 'ตัวเลขเท่านั้น',
             'image.required' => 'เพิ่มภาพ',
             'image.image' => 'ไฟล์ภาพเท่านั้น',
             'image.max' => 'สูงสุด 12MB',
         ]);
+
+        DB::beginTransaction();
 
         try {
             $imageName = 'product'.Set::newFileName($this->image);
@@ -64,10 +62,14 @@ class ProductIndex extends Component
             $this->image->storeAs('product-images', $imageName, 'public');
 
             $this->dispatch('alert', ['message' => '<div class="text-green-700">เพิ่มสำเร็จ</div>']);
-            $this->clearFormInsert();
+            $this->clearForm();
             $this->dispatch('hidden-insert');
+
+            DB::commit();
         }
         catch(\Exception $e) {
+            DB::rollBack();
+
             $message = <<<HTML
                 <div class="text-gray-600">เพิ่ม</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
@@ -77,7 +79,8 @@ class ProductIndex extends Component
         }
     }
 
-    public function clearFormInsert(): void {
+    public function clearForm(): void {
+        $this->id = null;
         $this->name = '';
         $this->price = '';
         $this->image = null;
@@ -88,12 +91,18 @@ class ProductIndex extends Component
 
     // @delete
     public function delete(?int $id = null): void {
+        DB::beginTransaction();
+
         try {
             DB::table(Table::$product)->where('id', $id)->delete();
             $this->dispatch('alert', ['message' => '<div class="text-green-700">ลบสำเร็จ</div>']);
             $this->dispatch('hidden-delete');
+
+            DB::commit();
         }
         catch(\Exception $e) {
+            DB::rollBack();
+
             $message = <<<HTML
                 <div class="text-gray-600">ลบ</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
@@ -110,68 +119,62 @@ class ProductIndex extends Component
     public function edit(?int $id = null): void {
         $query = DB::table(Table::$product)->where('id', $id)->first();
 
-        $this->editId = $id;
-        $this->nameEdit = $query?->name;
-        $this->priceEdit = $query?->price;
-        $this->priceEdit = $query?->price;
-        $this->previewImageEdit = "/storage/product-images/{$query?->image}";
-        $this->oldImageName = $query?->image;
-    }
-
-    public function clearFormEdit(): void {
-        $this->nameEdit = '';
-        $this->priceEdit = '';
-        $this->imageEdit = null;
-        $this->previewImageEdit = '';
-        $this->oldImageName = '';
-        $this->clearErrors();
+        $this->id = $id;
+        $this->name = $query?->name;
+        $this->price = $query?->price;
+        $this->price = $query?->price;
+        $this->previewImage = "/storage/product-images/{$query?->image}";
     }
     // @end edit
 
     // @update
     public function update(): void {
-        $this->nameEdit = Set::string($this->nameEdit);
+        $this->name = Set::string($this->name);
 
         $tbProduct = Table::$product;
         $this->validate([
-            'nameEdit' => "required|string|max:20|unique:{$tbProduct},name,$this->editId,id",
-            'priceEdit' => 'required|max:7',
-            'imageEdit' => 'nullable|image|max:12288'
+            'name' => "required|string|max:20|unique:{$tbProduct},name,$this->id,id",
+            'price' => 'required|numeric|max:9999',
+            'image' => 'nullable|image|max:12288'
         ], [
-            'nameEdit.required' => 'กรอกชื่อ',
-            'nameEdit.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
-            'nameEdit.max' => 'ชื่อสูงสุด 20 ตัว',
-            'nameEdit.unique' => 'ชื่อนี้มีอยู่แล้ว',
-            'priceEdit.required' => 'กรอกราคา',
-            'priceEdit.max' => 'ราคาสูงสุด (9999.99)',
-            'imageEdit.image' => 'ไฟล์ภาพเท่านั้น',
-            'imageEdit.max' => 'สูงสุด 12MB',
+            'name.required' => 'กรอกชื่อ',
+            'name.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
+            'name.max' => 'ชื่อสูงสุด 20 ตัว',
+            'name.unique' => 'ชื่อนี้มีอยู่แล้ว',
+            'price.required' => 'กรอกราคา',
+            'price.max' => 'ราคาสูงสุด (9999)',
+            'price.numeric' => 'ตัวเลขเท่านั้น',
+            'image.image' => 'ไฟล์ภาพเท่านั้น',
+            'image.max' => 'สูงสุด 12MB',
         ]);
 
+        DB::beginTransaction();
+
         try {
-            $image = $this->oldImageName;
-            if(!empty($this->imageEdit)) {
-                $image = 'prodcut'.Set::newFileName($this->imageEdit);
+            $update = [
+                'name' => $this->name,
+                'price' => Set::number($this->price),
+                'updated_at' => now()
+            ];
+
+            if($this->image) {
+                $update = array_merge($update, ['image' => 'prodcut'.Set::newFileName($this->image)]);
             }
 
-            DB::table(Table::$product)
-                ->where('id', $this->editId)
-                ->update([
-                    'name' => $this->nameEdit,
-                    'price' => Set::number($this->priceEdit),
-                    'image' => $image,
-                    'updated_at' => now()
-                ]);
+            DB::table(Table::$product)->where('id', $this->id)->update($update);
 
-            if(!empty($this->imageEdit)) {
-                $this->imageEdit->storeAs('product-images', $image, 'public');
+            if(!empty($this->image)) {
+                $this->image->storeAs('product-images', $image, 'public');
             }
 
             $this->dispatch('alert', ['message' => '<div class="text-green-700">อัพเดทสำเร็จ</div>']);
-            $this->clearFormEdit();
             $this->dispatch('hidden-edit');
+
+            DB::commit();
         }
         catch(\Exception $e) {
+            DB::rollBack();
+
             $message = <<<HTML
                 <div class="text-gray-600">อัพเดท</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>

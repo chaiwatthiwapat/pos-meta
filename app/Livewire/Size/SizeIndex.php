@@ -14,13 +14,10 @@ class SizeIndex extends Component
 
     public int $paginate = 10;
 
-    // @variable
+    // @model
     public ?string $name = null;
-    public ?float $price = null;
-
-    public ?int $editId = null;
-    public ?string $nameEdit = '';
-    public ?float $priceEdit = null;
+    public ?int $price = null;
+    public ?int $id = null;
 
     // @insert
     public function insert(): void {
@@ -29,15 +26,18 @@ class SizeIndex extends Component
         $tbSize = Table::$size;
         $this->validate([
             'name' => "required|string|max:20|unique:{$tbSize},name",
-            'price' => 'required|max:7',
+            'price' => 'required|numeric|max:9999',
         ], [
             'name.required' => 'กรอกชื่อ',
             'name.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
             'name.max' => 'ชื่อสูงสุด 20 ตัว',
             'name.unique' => 'ชื่อนี้มีอยู่แล้ว',
             'price.required' => 'กรอกราคา',
-            'price.max' => 'ราคาสูงสุด (9999.99)',
+            'price.max' => 'ราคาสูงสุด (9999)',
+            'price.numeric' => 'ตัวเลขเท่านั้น',
         ]);
+
+        DB::beginTransaction();
 
         try {
             DB::table(Table::$size)
@@ -48,10 +48,14 @@ class SizeIndex extends Component
                 ]);
 
             $this->dispatch('alert', ['message' => '<div class="text-green-700">เพิ่มสำเร็จ</div>']);
-            $this->clearFormInsert();
+            $this->clearForm();
             $this->dispatch('hidden-insert');
+
+            DB::commit();
         }
         catch(\Exception $e) {
+            DB::rollBack();
+
             $message = <<<HTML
                 <div class="text-gray-600">เพิ่ม</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
@@ -61,23 +65,28 @@ class SizeIndex extends Component
         }
     }
 
-    public function clearFormInsert(): void {
-        $this->productName = '';
-        $this->productPrice = '';
-        $this->productImage = null;
-        $this->previewImage = '';
+    public function clearForm(): void {
+        $this->id = null;
+        $this->name = '';
+        $this->price = null;
         $this->clearErrors();
     }
     // @end insert
 
     // @delete
     public function delete(?int $id = null): void {
+        DB::beginTransaction();
+
         try {
             DB::table(Table::$size)->where('id', $id)->delete();
             $this->dispatch('alert', ['message' => '<div class="text-green-700">ลบสำเร็จ</div>']);
             $this->dispatch('hidden-delete');
+
+            DB::commit();
         }
         catch(\Exception $e) {
+            DB::rollBack();
+            
             $message = <<<HTML
                 <div class="text-gray-600">ลบ</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
@@ -94,50 +103,50 @@ class SizeIndex extends Component
     public function edit(?int $id = null): void {
         $query = DB::table(Table::$size)->where('id', $id)->first();
 
-        $this->editId = $id;
-        $this->nameEdit = $query?->name;
-        $this->priceEdit = $query?->price;
-    }
-
-    public function clearFormEdit(): void {
-        $this->editId = null;
-        $this->nameEdit = '';
-        $this->priceEdit = null;
-        $this->clearErrors();
+        $this->id = $id;
+        $this->name = $query?->name;
+        $this->price = $query?->price;
     }
     // @end edit
 
     // @update
     public function update(): void {
-        $this->nameEdit = Set::string($this->nameEdit);
+        $this->name = Set::string($this->name);
 
         $tbSize = Table::$size;
         $this->validate([
-            'nameEdit' => "required|string|max:20|unique:{$tbSize},name,$this->editId,id",
-            'priceEdit' => 'required|max:7',
+            'name' => "required|string|max:20|unique:{$tbSize},name,$this->id,id",
+            'price' => 'required|numeric|max:9999',
         ], [
-            'nameEdit.required' => 'กรอกชื่อ',
-            'nameEdit.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
-            'nameEdit.max' => 'ชื่อสูงสุด 20 ตัว',
-            'nameEdit.unique' => 'ชื่อนี้มีอยู่แล้ว',
-            'priceEdit.required' => 'กรอกราคา',
-            'priceEdit.max' => 'ราคาสูงสุด (9999.99)',
+            'name.required' => 'กรอกชื่อ',
+            'name.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
+            'name.max' => 'ชื่อสูงสุด 20 ตัว',
+            'name.unique' => 'ชื่อนี้มีอยู่แล้ว',
+            'price.required' => 'กรอกราคา',
+            'price.max' => 'ราคาสูงสุด (9999)',
+            'price.numeric' => 'ตัวเลขเท่านั้น',
         ]);
+
+        DB::beginTransaction();
 
         try {
             DB::table(Table::$size)
-                ->where('id', $this->editId)
+                ->where('id', $this->id)
                 ->update([
-                    'name' => $this->nameEdit,
-                    'price' => Set::number($this->priceEdit),
+                    'name' => $this->name,
+                    'price' => Set::number($this->price),
                     'updated_at' => now()
                 ]);
 
             $this->dispatch('alert', ['message' => '<div class="text-green-700">อัพเดทสำเร็จ</div>']);
-            $this->clearFormEdit();
+            $this->clearForm();
             $this->dispatch('hidden-edit');
+
+            DB::commit();
         }
         catch(\Exception $e) {
+            DB::rollBack();
+            
             $message = <<<HTML
                 <div class="text-gray-600">อัพเดท</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
