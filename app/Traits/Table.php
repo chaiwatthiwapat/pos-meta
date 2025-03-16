@@ -9,4 +9,5 @@ trait Table
     public static string $size = 'sizes';
     public static string $type = 'types';
     public static string $topping = 'toppings';
+    public static string $user = 'users';
 }

@@ -12,7 +12,7 @@ class PosIndex extends Component
     use Table;
 
     public int $paginate = 10;
-    public ?object $productModalData = null;
+    public ?object $productData = null;
     public ?int $id = null;
     public ?string $name = '';
     public ?int $price = 0;
@@ -36,7 +36,7 @@ class PosIndex extends Component
         return collect(session('toppings'));
     }
 
-    public function productModal(?int $id): void {
+    public function product(?int $id): void {
         $query = DB::table(Table::$product)
             ->where('id', $id)
             ->first();
@@ -50,7 +50,7 @@ class PosIndex extends Component
         $this->name = $query?->name;
         $this->price = $query?->price;
         $this->qty = 1;
-        $this->productModalData = $data;
+        $this->productData = $data;
     }
 
     public function getSize(): void {

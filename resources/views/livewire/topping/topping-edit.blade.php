@@ -1,5 +1,6 @@
 <div x-show="showEdit"
     x-on:hidden-edit.window="showEdit = false"
+    x-on:keydown.escape.window="showEdit = false"
     style="display: none"
     class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[2000] transition-opacity duration-300">
 

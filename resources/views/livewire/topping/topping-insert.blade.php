@@ -1,5 +1,6 @@
 <div x-show="showInsert"
     x-on:hidden-insert.window="showInsert = false"
+    x-on:keydown.escape.window="showInsert = false"
     style="display: none"
     class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[2000] transition-opacity duration-300">
 

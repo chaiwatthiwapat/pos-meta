@@ -2,7 +2,7 @@
     @foreach($products as $product)
         <div
             x-data
-            x-on:click="showModalProduct = true; $wire.call('productModal', {{ $product->id }})"
+            x-on:click="showModalProduct = true; $wire.call('product', {{ $product->id }})"
             class="border rounded-lg p-4 shadow-sm hover:border-blue-500 transition duration-200 bg-white cursor-pointer"
         >
             <img

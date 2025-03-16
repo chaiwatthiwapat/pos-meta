@@ -1,7 +1,7 @@
 <div
     x-data="{
         data: JSON.parse(localStorage.getItem('cartItem')) || [],
-        updateLocalStorage() {
+        updateCartItem() {
             localStorage.setItem('cartItem', JSON.stringify(this.data));
         },
         get amount() {
@@ -45,7 +45,7 @@
                                     x-on:click="
                                         data[index].qty > 1 ? data[index].qty-- : null;
                                         data[index].amount = data[index].qty * data[index].price;
-                                        updateLocalStorage();
+                                        updateCartItem();
                                     "
                                     class="px-2 py-1 bg-blue-200 text-blue-700 rounded hover:bg-blue-300 duration-200">
                                     -
@@ -58,7 +58,7 @@
                                     x-on:click="
                                         data[index].qty++;
                                         data[index].amount = data[index].qty * data[index].price;
-                                        updateLocalStorage();
+                                        updateCartItem();
                                     "
                                     class="px-2 py-1 bg-blue-200 text-blue-700 rounded hover:bg-blue-300 duration-200">
                                     +
@@ -69,7 +69,7 @@
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700 w-[100px]">
                             <button x-on:click="
                                 data.splice(index, 1);
-                                updateLocalStorage();
+                                updateCartItem();
                             "
                             class="bg-red-500 text-white hover:bg-red-600 duration-200 px-3 py-2 rounded-lg font-medium flex items-center justify-center mx-auto">
                                 ลบ

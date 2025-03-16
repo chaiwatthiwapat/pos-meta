@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Livewire\Product;
+namespace App\Livewire\User;
 
 use App\Traits\Set;
 use App\Traits\Table;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class ProductIndex extends Component
+class UserIndex extends Component
 {
     use WithFileUploads;
     use Set;
@@ -18,56 +19,58 @@ class ProductIndex extends Component
     public ?UploadedFile $image = null;
     public ?string $previewImage = '';
     public string $name = '';
-    public string $price = '';
+    public string $password = '';
+    public string $password_confirmation = '';
     public int $paginate = 10;
-    public bool $priceDecimal = false;
-
     public ?int $editId = null;
-    public ?UploadedFile $imageEdit = null;
-    public ?string $previewImageEdit = '';
     public ?string $oldImageName = '';
-    public ?string $nameEdit = '';
-    public ?string $priceEdit = '';
 
     // @insert
     public function insert(): void {
         $this->name = Set::string($this->name);
 
-        $tbProduct = Table::$product;
+        $tbUser = Table::$user;
         $this->validate([
-            'name' => "required|string|max:20|unique:{$tbProduct},name",
-            'price' => 'required|max:7',
-            'image' => 'required|image|max:12288'
+            'name' => "required|string|max:20|unique:{$tbUser},name",
+            'password' => 'required|string|min:6|max:16|confirmed',
+            'image' => 'nullable|image|max:12288'
         ], [
             'name.required' => 'กรอกชื่อ',
             'name.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
             'name.max' => 'ชื่อสูงสุด 20 ตัว',
             'name.unique' => 'ชื่อนี้มีอยู่แล้ว',
-            'price.required' => 'กรอกราคา',
-            'price.max' => 'ราคาสูงสุด (9999.99)',
-            'image.required' => 'เพิ่มภาพ',
+            'password.required' => 'กรอกรหัสผ่าน',
+            'password.min' => 'อย่างน้อย 6',
+            'password.max' => 'มากสุด 16',
+            'password.confirmed' => 'รหัสผ่านไม่ตรงกัน',
             'image.image' => 'ไฟล์ภาพเท่านั้น',
             'image.max' => 'สูงสุด 12MB',
         ]);
 
         try {
-            $imageName = 'product'.Set::newFileName($this->image);
+            $imageName = null;
+            if($this->image) {
+                $imageName = 'user'.Set::newFileName($this->image);
+            }
 
-            DB::table(Table::$product)
+            DB::table(Table::$user)
                 ->insert([
                     'name' => $this->name,
-                    'price' => Set::number($this->price),
+                    'password' => Hash::make($this->password),
                     'image' => $imageName,
                     'created_at' => now()
                 ]);
 
-            $this->image->storeAs('product-images', $imageName, 'public');
+            if($this->image) {
+                $this->image->storeAs('user-images', $imageName, 'public');
+            }
 
             $this->dispatch('alert', ['message' => '<div class="text-green-700">เพิ่มสำเร็จ</div>']);
-            $this->clearFormInsert();
+            $this->clearForm();
             $this->dispatch('hidden-insert');
         }
         catch(\Exception $e) {
+            throw $e;
             $message = <<<HTML
                 <div class="text-gray-600">เพิ่ม</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
@@ -77,11 +80,12 @@ class ProductIndex extends Component
         }
     }
 
-    public function clearFormInsert(): void {
+    public function clearForm(): void {
         $this->name = '';
-        $this->price = '';
+        $this->password = '';
         $this->image = null;
         $this->previewImage = '';
+        $this->oldImageName = '';
         $this->clearErrors();
     }
     // @end insert
@@ -89,7 +93,7 @@ class ProductIndex extends Component
     // @delete
     public function delete(?int $id = null): void {
         try {
-            DB::table(Table::$product)->where('id', $id)->delete();
+            DB::table(Table::$user)->where('id', $id)->delete();
             $this->dispatch('alert', ['message' => '<div class="text-green-700">ลบสำเร็จ</div>']);
             $this->dispatch('hidden-delete');
         }
@@ -108,67 +112,62 @@ class ProductIndex extends Component
 
     // @edit
     public function edit(?int $id = null): void {
-        $query = DB::table(Table::$product)->where('id', $id)->first();
+        $query = DB::table(Table::$user)->where('id', $id)->first();
 
+        $oldImage = $query?->image ?? 'default.png';
         $this->editId = $id;
-        $this->nameEdit = $query?->name;
-        $this->priceEdit = $query?->price;
-        $this->priceEdit = $query?->price;
-        $this->previewImageEdit = "/storage/product-images/{$query?->image}";
+        $this->name = $query?->name;
+        $this->previewImage = "/storage/user-images/$oldImage";
         $this->oldImageName = $query?->image;
-    }
-
-    public function clearFormEdit(): void {
-        $this->nameEdit = '';
-        $this->priceEdit = '';
-        $this->imageEdit = null;
-        $this->previewImageEdit = '';
-        $this->oldImageName = '';
-        $this->clearErrors();
+        $this->password = '';
+        $this->password_confirmation = '';
     }
     // @end edit
 
     // @update
     public function update(): void {
-        $this->nameEdit = Set::string($this->nameEdit);
+        $this->name = Set::string($this->name);
 
-        $tbProduct = Table::$product;
+        $tbUser = Table::$user;
         $this->validate([
-            'nameEdit' => "required|string|max:20|unique:{$tbProduct},name,$this->editId,id",
-            'priceEdit' => 'required|max:7',
-            'imageEdit' => 'nullable|image|max:12288'
+            'name' => "required|string|max:20|unique:{$tbUser},name,$this->editId,id",
+            'password' => 'nullable|string|min:6|max:16|confirmed',
+            'image' => 'nullable|image|max:12288'
         ], [
-            'nameEdit.required' => 'กรอกชื่อ',
-            'nameEdit.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
-            'nameEdit.max' => 'ชื่อสูงสุด 20 ตัว',
-            'nameEdit.unique' => 'ชื่อนี้มีอยู่แล้ว',
-            'priceEdit.required' => 'กรอกราคา',
-            'priceEdit.max' => 'ราคาสูงสุด (9999.99)',
-            'imageEdit.image' => 'ไฟล์ภาพเท่านั้น',
-            'imageEdit.max' => 'สูงสุด 12MB',
+            'name.required' => 'กรอกชื่อ',
+            'name.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
+            'name.max' => 'ชื่อสูงสุด 20 ตัว',
+            'name.unique' => 'ชื่อนี้มีอยู่แล้ว',
+            'password.min' => 'อย่างน้อย 6',
+            'password.max' => 'มากสุด 16',
+            'password.confirmed' => 'รหัสผ่านไม่ตรงกัน',
+            'image.image' => 'ไฟล์ภาพเท่านั้น',
+            'image.max' => 'สูงสุด 12MB',
         ]);
 
         try {
-            $image = $this->oldImageName;
-            if(!empty($this->imageEdit)) {
-                $image = 'prodcut'.Set::newFileName($this->imageEdit);
+            $update = [
+                'name' => $this->name,
+                'updated_at' => now()
+            ];
+
+            if($this->password) {
+                $update = array_merge($update, ['password' => Hash::make($this->password)]);
             }
 
-            DB::table(Table::$product)
-                ->where('id', $this->editId)
-                ->update([
-                    'name' => $this->nameEdit,
-                    'price' => Set::number($this->priceEdit),
-                    'image' => $image,
-                    'updated_at' => now()
-                ]);
+            if($this->image) {
+                $image = 'user'.Set::newFileName($this->image);
+                $update = array_merge($update, ['image' => $image]);
+            }
 
-            if(!empty($this->imageEdit)) {
-                $this->imageEdit->storeAs('product-images', $image, 'public');
+            DB::table(Table::$user)->where('id', $this->editId)->update($update);
+
+            if(!empty($this->image)) {
+                $this->image->storeAs('user-images', $image, 'public');
             }
 
             $this->dispatch('alert', ['message' => '<div class="text-green-700">อัพเดทสำเร็จ</div>']);
-            $this->clearFormEdit();
+            $this->clearForm();
             $this->dispatch('hidden-edit');
         }
         catch(\Exception $e) {
@@ -189,8 +188,8 @@ class ProductIndex extends Component
 
     public function render()
     {
-        return view('livewire.product.product-index', [
-            'productData' => DB::table(Table::$product)->latest()->paginate($this->paginate)
+        return view('livewire.user.user-index', [
+            'userData' => DB::table(Table::$user)->latest()->paginate($this->paginate)
         ]);
     }
 }

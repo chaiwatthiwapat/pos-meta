@@ -1,4 +1,9 @@
-<div x-data="{ showAlert: false }" x-show="showAlert" x-init="$store.alert = $data" style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[10000]">
+<div 
+    x-data="{ showAlert: false }" 
+    x-show="showAlert" 
+    x-init="$store.alert = $data"
+    x-on:keydown.escape.window="showAlert = false"
+    style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[10000]">
     {{-- Stop trying to control. --}}
 
     <div class="bg-white p-6 rounded-lg shadow-lg w-[500px]">

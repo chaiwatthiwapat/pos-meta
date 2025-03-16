@@ -13,7 +13,7 @@
 
         {{-- หัวข้อ --}}
         <h2 data-modal-header class="text-xl font-bold mb-4 text-gray-800 text-center">
-            เพิ่มสินค้า
+            เพิ่มผู้ใช้งาน
         </h2>
 
         <form wire:submit="insert">
@@ -26,26 +26,40 @@
                 </div>
             @endif
 
-            {{-- ชื่อสินค้า --}}
-            <div class="mb-4">
-                <label class="text-gray-600 font-medium">ชื่อ</label>
-                <input wire:model="name" type="text"
-                    class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none">
-            </div>
+           <div x-data="{ showPassword: false }">
+                {{-- ชื่อผู้ใช้งาน --}}
+                <div class="mb-4">
+                    <label class="text-gray-600 font-medium">ชื่อ</label>
+                    <input wire:model="name" type="text"
+                        class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none">
+                </div>
 
-            {{-- ราคา --}}
-            <div class="mb-4">
-                <label class="text-gray-600 font-medium">ราคา</label>
-                <input wire:model="price" type="number"
-                    class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none spin-none">
-            </div>
+                {{-- รหัสผ่าน --}}
+                <div class="mb-4">
+                    <label class="text-gray-600 font-medium">รหัสผ่าน</label>
+                    <input wire:model="password" :type="showPassword ? 'text' : 'password'"
+                        class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none">
+                </div>
+
+                {{-- ยืนยันรหัสผ่าน --}}
+                <div class="mb-4">
+                    <label class="text-gray-600 font-medium">ยืนยันรหัสผ่าน</label>
+                    <input wire:model="password_confirmation" :type="showPassword ? 'text' : 'password'"
+                        class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none">
+                </div>
+
+                <div class="mb-4">
+                    <input id="show-password" x-on:click="showPassword = !showPassword" type="checkbox">
+                    <label for="show-password" class="text-gray-600 font-medium select-none cursor-pointer">ดูรหัสผ่าน</label>
+                </div>
+           </div>
 
             {{-- อัพโหลดรูป --}}
             <div x-data="{ previewImage: @entangle('previewImage') }" class="mb-4">
-                <label class="text-gray-600 font-medium">ภาพสินค้า</label>
+                <label class="text-gray-600 font-medium">ภาพผู้ใช้งาน</label>
                 <input wire:model="image" type="file"
+                x-on:change="if(file = $event.target.files[0]) previewImage = URL.createObjectURL(file)"
                     class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none"
-                    x-on:change="if(file = $event.target.files[0]) previewImage = URL.createObjectURL(file)"
                     accept="image/*">
 
                 <!-- Preview รูป -->

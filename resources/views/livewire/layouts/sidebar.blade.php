@@ -9,6 +9,7 @@
                 ['route' => 'topping.index', 'label' => 'Topping'],
                 ['route' => 'pos.index', 'label' => 'POS'],
                 ['route' => 'orders.index', 'label' => 'Orders'],
+                ['route' => 'user.index', 'label' => 'Users'],
             ];
         @endphp
 

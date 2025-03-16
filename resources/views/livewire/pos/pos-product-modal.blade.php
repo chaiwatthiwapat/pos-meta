@@ -1,20 +1,25 @@
-<div x-data="{
-    id: @entangle('id'),
-    name: @entangle('name'),
-    price: @entangle('price'),
-    qty: @entangle('qty'),
-}" x-show="showModalProduct" style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+<div 
+    x-data="{
+        id: @entangle('id'),
+        name: @entangle('name'),
+        price: @entangle('price'),
+        qty: @entangle('qty'),
+    }" 
+    x-show="showModalProduct"
+    x-on:keydown.escape.window="showModalProduct = false"
+    style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+    {{--  --}}
     <div class="bg-white p-6 rounded-lg shadow-lg w-[600px]">
         <h2 data-modal-header class="text-xl font-bold mb-4">เมนู</h2>
 
         <div>
             <p class="text-gray-600 mb-2">
-                {{ $productModalData?->name }}
+                {{ $productData?->name }}
             </p>
 
             <div class="flex gap-4 p-4 bg-white rounded-lg shadow-lg">
                 <div class="max-w-[150px] max-h-[150px] aspect-square overflow-hidden rounded-lg border border-gray-200 shadow-md flex items-center justify-center">
-                    <img class="w-full h-full object-cover" src="{{ asset('storage/product-images/' . ($productModalData?->image ?? 'default.png')) }}" alt="pos product">
+                    <img class="w-full h-full object-cover" src="{{ asset('storage/product-images/' . ($productData?->image ?? 'default.png')) }}" alt="pos product">
                 </div>
 
                 <div class="flex flex-col justify-between w-full">

@@ -7,9 +7,9 @@ use App\Livewire\Product\ProductIndex;
 use App\Livewire\Size\SizeIndex;
 use App\Livewire\Topping\ToppingIndex;
 use App\Livewire\Type\TypeIndex;
+use App\Livewire\User\UserIndex;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/', HomeIndex::class)->name('home.index');
 Route::get('/pos', PosIndex::class)->name('pos.index');
@@ -18,8 +18,9 @@ Route::get('/product', ProductIndex::class)->name('product.index');
 Route::get('/size', SizeIndex::class)->name('size.index');
 Route::get('/type', TypeIndex::class)->name('type.index');
 Route::get('/topping', ToppingIndex::class)->name('topping.index');
+Route::get('/user', UserIndex::class)->name('user.index');
 
-Route::get('/storageLink', function () {
+Route::get('/storage-link', function () {
     $storagePath = storage_path('app/public');
     $rootStorage = $_SERVER['DOCUMENT_ROOT'] . '/storage';
 
@@ -31,7 +32,7 @@ Route::get('/storageLink', function () {
     }
 });
 
-Route::get('storageUnlink', function () {
+Route::get('storage-unlink', function () {
     $rootStorage = "$_SERVER[DOCUMENT_ROOT]/storage";
 
     if(file_exists($rootStorage)) {
