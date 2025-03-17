@@ -14,7 +14,7 @@
                     ภาพ
                 </th>
                 <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-start text-xs font-semibold" style="width: 200px !important;">
-                    ผู้ใช้งาน
+                    ชื่อ
                 </th>
                 <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-center text-xs font-semibold">
                     {{-- actions --}}

@@ -11,7 +11,7 @@
     x-init="$store.cart = $data"
     class="flex-grow bg-white p-3 rounded border">
     {{--  --}}
-    <div class="h-[500px] overflow-auto">
+    <div class="h-[500px] w-[500px] overflow-auto">
         <table class="w-full">
             <thead class="sticky top-0">
                 <thead class="sticky top-0 bg-blue-100 shadow-md">
@@ -31,9 +31,42 @@
                         <td class="w-[20px] px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                             <span x-text="index + 1"></span>
                         </td>
-                        <td class="px-5 py-3 border-b-2 border-blue-200 text-left text-xs font-semibold text-gray-700">
-                            <span x-text="item.name"></span>
+                        <td class="px-5 py-3 border-b-2 border-blue-200 text-left text-xs font-semibold text-gray-700" x-data="{ open: false }">
+                            <div class="flex gap-1">
+                                <!-- แสดงชื่อหลัก -->
+                                <div class="font-bold text-sm text-gray-900" x-text="item.product.name"></div>
+                            
+                                <!-- Dropdown Button -->
+                                <button x-on:click="open = !open" class="text-blue-500 hover:text-blue-700 text-xs">
+                                    ▼
+                                </button>
+                            </div>
+                        
+                            <!-- Dropdown Content -->
+                            <div x-show="open" x-on:click.away="open = false" class="bg-white border rounded-md shadow-md mt-2 min-w-40 p-2 absolute z-10">
+                                <div class="text-xs text-gray-600">
+                                    <p>
+                                        <span class="font-semibold whitespace-nowrap">สินค้า:</span> 
+                                        <span x-text="item.product.name + ` (${item.product.price})`" class="text-blue-500 whitespace-nowrap"></span>
+                                    </p>
+                                    <p x-show="item.size.name">
+                                        <span class="font-semibold whitespace-nowrap">ไซต์:</span> 
+                                        <span x-text="item.size.name + ` (${item.size.price})`" class="text-blue-500 whitespace-nowrap"></span>
+                                    </p>
+                                    <p x-show="item.type.name">
+                                        <span class="font-semibold whitespace-nowrap">ประเภท:</span> 
+                                        <span x-text="item.type.name + ` (${item.type.price})`" class="text-blue-500 whitespace-nowrap"></span>
+                                    </p>
+                                    <p x-show="item.topping.name.length">
+                                        <span class="font-semibold whitespace-nowrap">ท็อปปิ้ง:</span> 
+                                        <template x-for="(name, index) in item.topping.name" :key="index">
+                                            <div x-text="name + ` (${item.topping.price[index]})`" class="text-blue-500 whitespace-nowrap pl-3"></div>
+                                        </template>
+                                    </p>
+                                </div>
+                            </div>
                         </td>
+                        
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-right text-xs font-semibold text-gray-700">
                             <span x-text="item.amount"></span>
                         </td>
@@ -43,21 +76,25 @@
                                 {{-- ลดจำนวน --}}
                                 <button
                                     x-on:click="
-                                        data[index].qty > 1 ? data[index].qty-- : null;
-                                        data[index].amount = data[index].qty * data[index].price;
+                                        let qty = data[index].product.qty;
+                                        qty > 1 ? qty-- : null;
+                                        data[index].product.qty = qty;
+                                        data[index].amount = qty * data[index].product.price;
                                         updateCartItem();
                                     "
                                     class="px-2 py-1 bg-blue-200 text-blue-700 rounded hover:bg-blue-300 duration-200">
                                     -
                                 </button>
 
-                                <div x-text="data[index].qty" class="w-[30px] text-center"></div>
+                                <div x-text="data[index].product.qty" class="w-8 text-center"></div>
 
                                 {{-- เพิ่มจำนวน --}}
                                 <button
                                     x-on:click="
-                                        data[index].qty++;
-                                        data[index].amount = data[index].qty * data[index].price;
+                                        let qty = data[index].product.qty;
+                                        qty++;
+                                        data[index].product.qty = qty;
+                                        data[index].amount = qty * (data[index].product.price + data[index].options);
                                         updateCartItem();
                                     "
                                     class="px-2 py-1 bg-blue-200 text-blue-700 rounded hover:bg-blue-300 duration-200">

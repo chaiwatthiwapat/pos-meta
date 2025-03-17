@@ -15,7 +15,7 @@
         </div>
 
         <div class="mt-4 flex justify-end gap-1">
-            <button type="button" x-on:click="showAlert = false" class="bg-blue-200 text-blue-500 hover:bg-blue-100 duration-200 px-3 py-2 rounded">
+            <button type="button" x-on:click="showAlert = false" class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs">
                 ปิด
             </button>
         </div>

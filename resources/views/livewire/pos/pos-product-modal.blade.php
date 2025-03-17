@@ -1,10 +1,34 @@
-<div 
+<div
     x-data="{
-        id: @entangle('id'),
-        name: @entangle('name'),
-        price: @entangle('price'),
-        qty: @entangle('qty'),
-    }" 
+        product: { 
+            id: @entangle('id'), 
+            name: @entangle('name'), 
+            price: @entangle('price'), 
+            qty: @entangle('qty') 
+        },
+        size: { name: '', price: 0 },
+        type: { name: '', price: 0 },
+        topping: { name: [], price: [] },
+        updateTopping(name, price, event) {
+            if(event.target.checked) {
+                this.topping.name.push(name);
+                this.topping.price.push(price);
+            } 
+            else {
+                let index = this.topping.name.indexOf(name);
+                if(index !== -1) {
+                    this.topping.name.splice(index, 1);
+                    this.topping.price.splice(index, 1);
+                }
+            }
+        },
+        get options() {
+            return this.size.price + this.type.price + this.topping.price.reduce((sum, p) => sum + p, 0);
+        },
+        get amount() {
+            return this.product.qty * (this.product.price + this.options);
+        }
+    }"
     x-show="showModalProduct"
     x-on:keydown.escape.window="showModalProduct = false"
     style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
@@ -14,7 +38,10 @@
 
         <div>
             <p class="text-gray-600 mb-2">
-                {{ $productData?->name }}
+                {{ $productData?->name }} 
+                <span class="text-blue-600 font-semibold">
+                    {{ $price }} 
+                </span>
             </p>
 
             <div class="flex gap-4 p-4 bg-white rounded-lg shadow-lg">
@@ -26,15 +53,15 @@
                     <div>
                         <div class="text-gray-600 text-sm">จำนวน</div>
                         <div class="flex items-center text-sm font-semibold text-gray-700">
-                            <button x-on:click="qty > 1 ? qty-- : null" class="select-none px-3 py-2 bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300 duration-200">-</button>
-                            <div x-text="qty" class="w-[40px] text-center select-none"></div>
-                            <button x-on:click="qty++" class="select-none px-3 py-2 bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300 duration-200">+</button>
+                            <button x-on:click="product.qty > 1 ? product.qty-- : null" class="select-none px-3 py-2 bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300 duration-200">-</button>
+                            <div x-text="product.qty" class="w-[40px] text-center select-none"></div>
+                            <button x-on:click="product.qty++" class="select-none px-3 py-2 bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300 duration-200">+</button>
                         </div>
                     </div>
 
                     <div class="px-4 py-3 bg-blue-50 text-blue-600 font-semibold rounded-lg">
                         <span>ราคา:</span>
-                        <span x-text="(price * qty).toLocaleString()"></span>
+                        <span x-text="amount"></span>
                     </div>
                 </div>
             </div>
@@ -52,7 +79,7 @@
             <button
                 x-on:click="
                     let items = JSON.parse(localStorage.getItem('cartItem')) || [];
-                    items.push({ id: id, name: name, qty: qty, price: price, amount: qty * price });
+                    items.push({ product, size, type, topping, options, amount });
                     localStorage.setItem('cartItem', JSON.stringify(items));
 
                     showModalProduct = false;

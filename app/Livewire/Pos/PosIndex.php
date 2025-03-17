@@ -30,7 +30,7 @@ class PosIndex extends Component
 
     public function types(): Collection {
         return collect(session('types'));
-    }
+    } 
 
     public function toppings(): Collection {
         return collect(session('toppings'));

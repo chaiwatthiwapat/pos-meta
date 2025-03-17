@@ -181,7 +181,7 @@ class UserIndex extends Component
         }
         catch(\Exception $e) {
             DB::rollBack();
-            throw $e;
+           
             $message = <<<HTML
                 <div class="text-gray-600">อัพเดท</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
