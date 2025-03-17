@@ -79,7 +79,7 @@
                                         let qty = data[index].product.qty;
                                         qty > 1 ? qty-- : null;
                                         data[index].product.qty = qty;
-                                        data[index].amount = qty * data[index].product.price;
+                                        data[index].amount = qty * (data[index].product.price + data[index].options);
                                         updateCartItem();
                                     "
                                     class="px-2 py-1 bg-blue-200 text-blue-700 rounded hover:bg-blue-300 duration-200">
