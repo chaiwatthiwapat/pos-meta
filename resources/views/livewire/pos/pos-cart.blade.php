@@ -35,30 +35,30 @@
                             <div class="flex gap-1">
                                 <!-- แสดงชื่อหลัก -->
                                 <div class="font-bold text-sm text-gray-900" x-text="item.product.name"></div>
-                            
+
                                 <!-- Dropdown Button -->
                                 <button x-on:click="open = !open" class="text-blue-500 hover:text-blue-700 text-xs">
                                     ▼
                                 </button>
                             </div>
-                        
+
                             <!-- Dropdown Content -->
                             <div x-show="open" x-on:click.away="open = false" class="bg-white border rounded-md shadow-md mt-2 min-w-40 p-2 absolute z-10">
                                 <div class="text-xs text-gray-600">
                                     <p>
-                                        <span class="font-semibold whitespace-nowrap">สินค้า:</span> 
+                                        <span class="font-semibold whitespace-nowrap">สินค้า:</span>
                                         <span x-text="item.product.name + ` (${item.product.price})`" class="text-blue-500 whitespace-nowrap"></span>
                                     </p>
                                     <p x-show="item.size.name">
-                                        <span class="font-semibold whitespace-nowrap">ไซต์:</span> 
+                                        <span class="font-semibold whitespace-nowrap">ไซต์:</span>
                                         <span x-text="item.size.name + ` (${item.size.price})`" class="text-blue-500 whitespace-nowrap"></span>
                                     </p>
                                     <p x-show="item.type.name">
-                                        <span class="font-semibold whitespace-nowrap">ประเภท:</span> 
+                                        <span class="font-semibold whitespace-nowrap">ประเภท:</span>
                                         <span x-text="item.type.name + ` (${item.type.price})`" class="text-blue-500 whitespace-nowrap"></span>
                                     </p>
                                     <p x-show="item.topping.name.length">
-                                        <span class="font-semibold whitespace-nowrap">ท็อปปิ้ง:</span> 
+                                        <span class="font-semibold whitespace-nowrap">ท็อปปิ้ง:</span>
                                         <template x-for="(name, index) in item.topping.name" :key="index">
                                             <div x-text="name + ` (${item.topping.price[index]})`" class="text-blue-500 whitespace-nowrap pl-3"></div>
                                         </template>
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                         </td>
-                        
+
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-right text-xs font-semibold text-gray-700">
                             <span x-text="item.amount"></span>
                         </td>
@@ -126,7 +126,12 @@
         </strong>
     </div>
     <div>
-        <button class="bg-blue-600 text-white hover:bg-blue-500 transition duration-200 px-4 py-3 rounded-lg w-full font-semibold shadow-md">
+        <button
+            x-on:click="
+                let items = JSON.parse(localStorage.getItem('cartItem'));
+                items.forEach(item => console.log(item.product.name));
+            "
+            class="bg-blue-600 text-white hover:bg-blue-500 transition duration-200 px-4 py-3 rounded-lg w-full font-semibold shadow-md">
             ดำเนินการต่อ
         </button>
     </div>

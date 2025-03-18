@@ -8,14 +8,16 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class ProductIndex extends Component
 {
     use WithFileUploads;
     use Set;
     use Table;
+    use WithPagination;
 
-    public int $paginate = 10;
+    public int $paginate = 5;
 
     // @model
     public ?int $id = null;

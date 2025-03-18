@@ -30,7 +30,7 @@ class PosIndex extends Component
 
     public function types(): Collection {
         return collect(session('types'));
-    } 
+    }
 
     public function toppings(): Collection {
         return collect(session('toppings'));
@@ -66,6 +66,10 @@ class PosIndex extends Component
     public function getTopping(): void {
         $query = DB::table(Table::$topping)->get();
         session(['toppings' => $query]);
+    }
+
+    public function saveOrders() {
+        dd('ok');
     }
 
     public function render()
