@@ -42,7 +42,7 @@ class TypeIndex extends Component
         try {
             DB::table(Table::$type)
                 ->insert([
-                    'name' => $this->name,
+                    'name' => Set::string($this->name),
                     'price' => Set::number($this->price),
                     'created_at' => now()
                 ]);
@@ -131,7 +131,7 @@ class TypeIndex extends Component
             DB::table(Table::$type)
                 ->where('id', $this->id)
                 ->update([
-                    'name' => $this->name,
+                    'name' => Set::string($this->name),
                     'price' => Set::number($this->price),
                     'updated_at' => now()
                 ]);

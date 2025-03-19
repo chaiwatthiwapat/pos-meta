@@ -9,6 +9,10 @@
         }
     }"
     x-init="$store.cart = $data"
+    x-on:clear-cart.window="
+        localStorage.setItem('cartItem', null);
+        $store.cart.data = JSON.parse(localStorage.getItem('cartItem')) || [];
+    "
     class="flex-grow bg-white p-3 rounded border">
     {{--  --}}
     <div class="h-[500px] w-[500px] overflow-auto">
@@ -79,7 +83,7 @@
                                         let qty = data[index].product.qty;
                                         qty > 1 ? qty-- : null;
                                         data[index].product.qty = qty;
-                                        data[index].amount = qty * (data[index].product.price + data[index].options);
+                                        data[index].amount = qty * (data[index].product.price + data[index].optionPrice);
                                         updateCartItem();
                                     "
                                     class="px-2 py-1 bg-blue-200 text-blue-700 rounded hover:bg-blue-300 duration-200">
@@ -94,7 +98,7 @@
                                         let qty = data[index].product.qty;
                                         qty++;
                                         data[index].product.qty = qty;
-                                        data[index].amount = qty * (data[index].product.price + data[index].options);
+                                        data[index].amount = qty * (data[index].product.price + data[index].optionPrice);
                                         updateCartItem();
                                     "
                                     class="px-2 py-1 bg-blue-200 text-blue-700 rounded hover:bg-blue-300 duration-200">
@@ -126,13 +130,15 @@
         </strong>
     </div>
     <div>
-        <button
+        <button 
             x-on:click="
                 let items = JSON.parse(localStorage.getItem('cartItem'));
-                items.forEach(item => console.log(item.product.name));
+                items ? $wire.call('ordersInsert', items) : null;
             "
-            class="bg-blue-600 text-white hover:bg-blue-500 transition duration-200 px-4 py-3 rounded-lg w-full font-semibold shadow-md">
-            ดำเนินการต่อ
+            type="submit" wire:loading.attr="disabled"
+            class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-2 rounded-lg font-medium flex items-center justify-center w-full h-10">
+            <span wire:loading.class="hidden">ดำเนินการต่อ</span>
+            <div wire:loading wire:target="ordersInsert" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
         </button>
     </div>
 </div>

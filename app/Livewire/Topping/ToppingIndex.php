@@ -42,7 +42,7 @@ class ToppingIndex extends Component
         try {
             DB::table(Table::$topping)
                 ->insert([
-                    'name' => $this->name,
+                    'name' => Set::string($this->name),
                     'price' => Set::number($this->price),
                     'created_at' => now()
                 ]);
@@ -133,7 +133,7 @@ class ToppingIndex extends Component
             DB::table(Table::$topping)
                 ->where('id', $this->id)
                 ->update([
-                    'name' => $this->name,
+                    'name' => Set::string($this->name),
                     'price' => Set::number($this->price),
                     'updated_at' => now()
                 ]);

@@ -42,7 +42,7 @@ class SizeIndex extends Component
         try {
             DB::table(Table::$size)
                 ->insert([
-                    'name' => $this->name,
+                    'name' => Set::string($this->name),
                     'price' => Set::number($this->price),
                     'created_at' => now()
                 ]);
@@ -133,7 +133,7 @@ class SizeIndex extends Component
             DB::table(Table::$size)
                 ->where('id', $this->id)
                 ->update([
-                    'name' => $this->name,
+                    'name' => Set::string($this->name),
                     'price' => Set::number($this->price),
                     'updated_at' => now()
                 ]);

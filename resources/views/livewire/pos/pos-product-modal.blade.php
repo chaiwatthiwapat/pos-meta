@@ -22,11 +22,11 @@
                 }
             }
         },
-        get options() {
+        get optionPrice() {
             return this.size.price + this.type.price + this.topping.price.reduce((sum, p) => sum + p, 0);
         },
         get amount() {
-            return this.product.qty * (this.product.price + this.options);
+            return this.product.qty * (this.product.price + this.optionPrice);
         }
     }"
     x-show="showModalProduct"
@@ -79,7 +79,7 @@
             <button
                 x-on:click="
                     let items = JSON.parse(localStorage.getItem('cartItem')) || [];
-                    items.push({ product, size, type, topping, options, amount });
+                    items.push({ product, size, type, topping, optionPrice, amount });
                     localStorage.setItem('cartItem', JSON.stringify(items));
 
                     showModalProduct = false;

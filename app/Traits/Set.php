@@ -19,15 +19,16 @@ trait Set
         return "{$uniqid}{$time}.{$ext}";
     }
 
+    // @ตัวเลขเท่านั้น
     public static function number(?string $number): float {
-        // ลบทุกอย่างที่ไม่ใช่ตัวเลข (0-9) ยกเว้นจุดทศนิยม (.)
+        // ลบทุกตัวที่ไม่ใช่ตัวเลข ยกเว้นจุดทศนิยม
         $numberOnly = preg_replace('/[^0-9.]/', '', (string) $number);
-
-        // ลบจุดทศนิยมตัวที่สองขึ้นไป (ให้เหลือตัวเดียว)
+    
+        // ลบจุดทศนิยมตัวที่สองขึ้นไป ให้เหลือเพียงตัวเดียว
         $numberOnly = preg_replace('/\.(?=.*\.)/', '', $numberOnly);
-
-        // แปลงเป็น float และตัดทศนิยมให้เหลือ 2 ตำแหน่ง
-        return number_format((float) $numberOnly, 2, '.', '');
+    
+        // แปลงเป็น float และปัดเศษให้มีทศนิยม 2 ตำแหน่ง
+        return round((float)$numberOnly, 2);
     }
 
     // @กรองเอาตัวเลข & number_format

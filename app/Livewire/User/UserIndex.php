@@ -30,7 +30,7 @@ class UserIndex extends Component
     public function insert(): void {
         $this->name = Set::string($this->name);
 
-        $tbUser = Table::$user;
+        $tbUser = Table::$users;
         $this->validate([
             'name' => "required|string|max:20|unique:{$tbUser},name",
             'password' => 'required|string|min:6|max:16|confirmed',
@@ -54,9 +54,9 @@ class UserIndex extends Component
                 $imageName = 'user'.Set::newFileName($this->image);
             }
 
-            DB::table(Table::$user)
+            DB::table(Table::$users)
                 ->insert([
-                    'name' => $this->name,
+                    'name' => Set::string($this->name),
                     'password' => Hash::make($this->password),
                     'image' => $imageName,
                     'created_at' => now()
@@ -95,7 +95,7 @@ class UserIndex extends Component
         DB::beginTransaction();
 
         try {
-            DB::table(Table::$user)->where('id', $id)->delete();
+            DB::table(Table::$users)->where('id', $id)->delete();
             $this->dispatch('alert', ['message' => '<div class="text-green-700">ลบสำเร็จ</div>']);
             $this->dispatch('hidden-delete');
 
@@ -118,7 +118,7 @@ class UserIndex extends Component
 
     // @edit
     public function edit(?int $id = null): void {
-        $query = DB::table(Table::$user)->where('id', $id)->first();
+        $query = DB::table(Table::$users)->where('id', $id)->first();
 
         $oldImage = $query?->image ?? 'default.png';
         $this->id = $id;
@@ -133,7 +133,7 @@ class UserIndex extends Component
     public function update(): void {
         $this->name = Set::string($this->name);
 
-        $tbUser = Table::$user;
+        $tbUser = Table::$users;
         $this->validate([
             'name' => "required|string|max:20|unique:{$tbUser},name,$this->id,id",
             'password' => 'nullable|string|min:6|max:16|confirmed',
@@ -154,7 +154,7 @@ class UserIndex extends Component
 
         try {
             $update = [
-                'name' => $this->name,
+                'name' => Set::string($this->name),
                 'updated_at' => now()
             ];
 
@@ -167,7 +167,7 @@ class UserIndex extends Component
                 $update = array_merge($update, ['image' => $image]);
             }
 
-            DB::table(Table::$user)->where('id', $this->id)->update($update);
+            DB::table(Table::$users)->where('id', $this->id)->update($update);
 
             if($this->image) {
                 $this->image->storeAs('user-images', $image, 'public');
@@ -200,7 +200,7 @@ class UserIndex extends Component
     public function render()
     {
         return view('livewire.user.user-index', [
-            'userData' => DB::table(Table::$user)->latest()->paginate($this->paginate)
+            'userData' => DB::table(Table::$users)->latest()->paginate($this->paginate)
         ]);
     }
 }

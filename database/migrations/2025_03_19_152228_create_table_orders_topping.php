@@ -17,9 +17,6 @@ return new class extends Migration
             $table->string('topping_name');
             $table->decimal('topping_price', 10, 2)->default(0.00);
             $table->timestamps();
-
-            // ถ้าต้องการ constraint (optional)
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders_topping');
+        Schema::dropIfExists('table_orders_topping');
     }
 };

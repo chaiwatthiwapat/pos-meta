@@ -55,7 +55,7 @@ class ProductIndex extends Component
 
             DB::table(Table::$product)
                 ->insert([
-                    'name' => $this->name,
+                    'name' => Set::string($this->name),
                     'price' => Set::number($this->price),
                     'image' => $imageName,
                     'created_at' => now()
@@ -154,7 +154,7 @@ class ProductIndex extends Component
 
         try {
             $update = [
-                'name' => $this->name,
+                'name' => Set::string($this->name),
                 'price' => Set::number($this->price),
                 'updated_at' => now()
             ];
