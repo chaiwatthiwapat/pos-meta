@@ -18,7 +18,7 @@ Route::get('/product', ProductIndex::class)->name('product.index');
 Route::get('/size', SizeIndex::class)->name('size.index');
 Route::get('/type', TypeIndex::class)->name('type.index');
 Route::get('/topping', ToppingIndex::class)->name('topping.index');
-Route::get('/user', UserIndex::class)->name('user.index');
+Route::get('/users', UserIndex::class)->name('users.index');
 
 Route::get('/storage-link', function () {
     $storagePath = storage_path('app/public');

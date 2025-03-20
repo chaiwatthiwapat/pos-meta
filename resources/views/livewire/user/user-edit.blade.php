@@ -20,7 +20,7 @@
         <form wire:submit="update">
             {{-- แสดง Error --}}
             @if($errors->any())
-                <div class="p-3 bg-red-100 text-red-700 border border-red-400 rounded mb-4">
+                <div class="p-3 bg-red-100 text-red-700 border border-red-400 rounded-lg mb-4">
                     @foreach ($errors->all() as $error)
                         <div>• {{ $error }}</div>
                     @endforeach

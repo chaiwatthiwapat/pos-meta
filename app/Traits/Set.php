@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 
 trait Set
 {
@@ -46,8 +47,8 @@ trait Set
         if (empty($text)) {
             return null;
         }
-
-        return mb_strimwidth($text, 0, $limit, '...');
+    
+        return Str::limit($text, $limit, '...');
     }
 
     // @date พศ.

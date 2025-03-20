@@ -165,7 +165,7 @@ class SizeIndex extends Component
     public function render()
     {
         return view('livewire.size.size-index', [
-            'sizeData' => DB::table(Table::$size)->latest()->paginate($this->paginate)
+            'data' => DB::table(Table::$size)->orderBy('id', 'desc')->paginate($this->paginate)
         ]);
     }
 }

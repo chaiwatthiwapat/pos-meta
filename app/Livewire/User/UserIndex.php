@@ -59,6 +59,7 @@ class UserIndex extends Component
                     'name' => Set::string($this->name),
                     'password' => Hash::make($this->password),
                     'image' => $imageName,
+                    'role' => 'staff',
                     'created_at' => now()
                 ]);
 
@@ -93,6 +94,10 @@ class UserIndex extends Component
     // @delete
     public function delete(?int $id = null): void {
         DB::beginTransaction();
+
+        if($id == 1 || $id == 2) {
+            return;
+        }
 
         try {
             DB::table(Table::$users)->where('id', $id)->delete();
@@ -200,7 +205,7 @@ class UserIndex extends Component
     public function render()
     {
         return view('livewire.user.user-index', [
-            'userData' => DB::table(Table::$users)->latest()->paginate($this->paginate)
+            'data' => DB::table(Table::$users)->orderBy('id', 'desc')->paginate($this->paginate)
         ]);
     }
 }

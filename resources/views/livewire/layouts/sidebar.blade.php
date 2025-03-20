@@ -2,14 +2,14 @@
     <nav class="space-y-2">
         @php
             $sidebarMenus = [
-                ['route' => 'home.index', 'label' => 'Home'],
-                ['route' => 'pos.index', 'label' => 'POS'],
-                ['route' => 'orders.index', 'label' => 'Orders'],
-                ['route' => 'product.index', 'label' => 'Product'],
-                ['route' => 'size.index', 'label' => 'Size'],
-                ['route' => 'type.index', 'label' => 'Type'],
-                ['route' => 'topping.index', 'label' => 'Topping'],
-                ['route' => 'user.index', 'label' => 'Users'],
+                ['route' => 'home.index', 'label' => 'หน้าแรก'],
+                ['route' => 'pos.index', 'label' => 'ขาย'],
+                ['route' => 'orders.index', 'label' => 'รายการขาย'],
+                ['route' => 'product.index', 'label' => 'สินค้า'],
+                ['route' => 'size.index', 'label' => 'ไซต์'],
+                ['route' => 'type.index', 'label' => 'ประเภท'],
+                ['route' => 'topping.index', 'label' => 'ท็อปปิ้ง'],
+                ['route' => 'users.index', 'label' => 'ผู้ใช้งาน'],
             ];
         @endphp
 

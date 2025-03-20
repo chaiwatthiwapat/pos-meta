@@ -6,9 +6,8 @@
             <tr>
                 <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-left font-semibold w-24">
                     <div class="w-fit">
-                        <button x-on:click="showInsert = true; $wire.call('clearForm')"
-                            class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs">
-                            เพิ่ม
+                        <button class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs opacity-0 cursor-default">
+                            hidden
                         </button>
                     </div>
                 </th>
@@ -40,7 +39,7 @@
 
             @foreach($ordersData as $row)
                 <tr>
-                    <td class="w-[20px] px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
+                    <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                         {{ $loop->iteration }}
                     </td>
                     <td class="px-5 py-3 border-b-2 border-blue-200 text-start text-xs font-semibold text-gray-700">

@@ -163,7 +163,7 @@ class TypeIndex extends Component
     public function render()
     {
         return view('livewire.type.type-index', [
-            'data' => DB::table(Table::$type)->latest()->paginate($this->paginate)
+            'data' => DB::table(Table::$type)->orderBy('id', 'desc')->paginate($this->paginate)
         ]);
     }
 }

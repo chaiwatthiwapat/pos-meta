@@ -5,11 +5,11 @@
         </div>
 
         <div class="mt-4 flex justify-end gap-1">
-            <button type="button" x-on:click="showDelete = false" class="bg-blue-200 text-blue-500 hover:bg-blue-100 duration-200 px-3 py-2 rounded">
+            <button type="button" x-on:click="showDelete = false" class="bg-blue-200 text-blue-500 hover:bg-blue-100 duration-200 px-3 py-2 rounded-lg">
                 ยกเลิก
             </button>
 
-            <button type="button" x-on:click="$wire.call('delete', id)" wire:loading.attr="disabled" class="bg-red-500 text-white hover:bg-red-600 duration-200 px-3 w-[50px] rounded flex items-center justify-center">
+            <button type="button" x-on:click="$wire.call('delete', id)" wire:loading.attr="disabled" class="bg-red-500 text-white hover:bg-red-600 duration-200 px-3 w-[50px] rounded-lg flex items-center justify-center">
                 <span wire:loading.class="hidden">
                     ลบ
                 </span>

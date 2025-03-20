@@ -5,7 +5,7 @@
         showDelete: false
     }"
 >
-    {{-- Do your work, then step back. --}}
+    {{-- Do your work, then step back. --}}    
     @include('livewire.user.user-table')
     @include('livewire.user.user-insert')
     @include('livewire.user.user-edit')

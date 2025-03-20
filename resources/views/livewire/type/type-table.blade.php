@@ -1,8 +1,10 @@
 <div>
-    <table x-data="{ showDecimal: false }" class="table-auto w-full">
+    @php use App\Traits\Set; @endphp
+    
+    <table x-data="{ showDecimal: false }" class="table-fixed w-full">
         <thead class="sticky top-0 z-[1000]">
             <tr>
-                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-left font-semibold w-[110px]">
+                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-left font-semibold w-24">
                     <div class="w-fit">
                         <button x-on:click="showInsert = true; $wire.call('clearForm')"
                             class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs">
@@ -10,10 +12,10 @@
                         </button>
                     </div>
                 </th>
-                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-start text-xs font-semibold" style="width: 200px !important;">
+                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-start text-xs font-semibold w-56">
                     ประเภท
                 </th>
-                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-right text-xs font-semibold" style="width: 50px !important;">
+                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-right text-xs font-semibold w-32">
                     <div class="flex items-center gap-1 justify-end">
                         <input x-on:change="showDecimal = !showDecimal" checked id="price-decimal" type="checkbox" class="cursor-pointer">
                         <label for="price-decimal" class="cursor-pointer select-none">
@@ -31,11 +33,11 @@
 
             @foreach($data as $row)
                 <tr>
-                    <td class="w-[20px] px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
+                    <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                         {{ $loop->iteration }}
                     </td>
                     <td class="px-5 py-3 border-b-2 border-blue-200 text-start text-xs font-semibold text-gray-700">
-                        {{ Str::limit($row->name, 20, '...') }}
+                        {{ Set::textLimit($row->name, 20, '...') }}
                     </td>
                     <td class="px-5 py-3 border-b-2 border-blue-200 text-right text-xs font-semibold text-gray-700">
                         <span x-show="!showDecimal">{{ number_format($row->price, 2) }}</span>
@@ -58,4 +60,8 @@
 
         </tbody>
     </table>
+
+    <div class="mt-4">
+        {{ $data->links('components.paginate') }}
+    </div>
 </div>

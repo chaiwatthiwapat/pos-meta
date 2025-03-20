@@ -13,7 +13,7 @@
         localStorage.setItem('cartItem', null);
         $store.cart.data = JSON.parse(localStorage.getItem('cartItem')) || [];
     "
-    class="flex-grow bg-white p-3 rounded border">
+    class="flex-grow bg-white p-3 rounded-lgborder">
     {{--  --}}
     <div class="h-[500px] w-[500px] overflow-auto">
         <table class="w-full">
@@ -51,20 +51,20 @@
                                 <div class="text-xs text-gray-600">
                                     <p>
                                         <span class="font-semibold whitespace-nowrap">สินค้า:</span>
-                                        <span x-text="item.product.name + ` (${item.product.price})`" class="text-blue-500 whitespace-nowrap"></span>
+                                        <span x-text="item.product.name + ` (${item.product.price.toLocaleString()})`" class="text-blue-500 whitespace-nowrap"></span>
                                     </p>
                                     <p x-show="item.size.name">
                                         <span class="font-semibold whitespace-nowrap">ไซต์:</span>
-                                        <span x-text="item.size.name + ` (${item.size.price})`" class="text-blue-500 whitespace-nowrap"></span>
+                                        <span x-text="item.size.name + ` (${item.size.price.toLocaleString()})`" class="text-blue-500 whitespace-nowrap"></span>
                                     </p>
                                     <p x-show="item.type.name">
                                         <span class="font-semibold whitespace-nowrap">ประเภท:</span>
-                                        <span x-text="item.type.name + ` (${item.type.price})`" class="text-blue-500 whitespace-nowrap"></span>
+                                        <span x-text="item.type.name + ` (${item.type.price.toLocaleString()})`" class="text-blue-500 whitespace-nowrap"></span>
                                     </p>
                                     <p x-show="item.topping.name.length">
                                         <span class="font-semibold whitespace-nowrap">ท็อปปิ้ง:</span>
                                         <template x-for="(name, index) in item.topping.name" :key="index">
-                                            <div x-text="name + ` (${item.topping.price[index]})`" class="text-blue-500 whitespace-nowrap pl-3"></div>
+                                            <div x-text="name + ` (${item.topping.price[index].toLocaleString()})`" class="text-blue-500 whitespace-nowrap pl-3"></div>
                                         </template>
                                     </p>
                                 </div>
@@ -72,7 +72,7 @@
                         </td>
 
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-right text-xs font-semibold text-gray-700">
-                            <span x-text="item.amount"></span>
+                            <span x-text="item.amount.toLocaleString()"></span>
                         </td>
                         <td class="px-5 py-3 border-b-2 border-blue-200">
                             <div class="flex items-center justify-center text-xs font-semibold text-gray-700">
@@ -86,7 +86,7 @@
                                         data[index].amount = qty * (data[index].product.price + data[index].optionPrice);
                                         updateCartItem();
                                     "
-                                    class="px-2 py-1 bg-blue-200 text-blue-500 rounded hover:bg-blue-300 duration-200">
+                                    class="px-2 py-1 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200">
                                     -
                                 </button>
 
@@ -101,7 +101,7 @@
                                         data[index].amount = qty * (data[index].product.price + data[index].optionPrice);
                                         updateCartItem();
                                     "
-                                    class="px-2 py-1 bg-blue-200 text-blue-500 rounded hover:bg-blue-300 duration-200">
+                                    class="px-2 py-1 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200">
                                     +
                                 </button>
 
@@ -126,7 +126,7 @@
         รายการ:
         <strong
             class="text-blue-500"
-            x-text="amount">
+            x-text="amount.toLocaleString()">
         </strong>
     </div>
     <div>

@@ -164,7 +164,7 @@ class ToppingIndex extends Component
     public function render()
     {
         return view('livewire.topping.topping-index', [
-            'data' => DB::table(Table::$topping)->latest()->paginate($this->paginate)
+            'data' => DB::table(Table::$topping)->orderBy('id', 'desc')->paginate($this->paginate)
         ]);
     }
 }

@@ -24,7 +24,7 @@ class OrdersIndex extends Component
     public function render()
     {
         return view('livewire.orders.orders-index', [
-            'ordersData' => DB::table(Table::$orders)->latest()->paginate($this->paginate)
+            'ordersData' => DB::table(Table::$orders)->orderBy('id', 'desc')->paginate($this->paginate)
         ]);
     }
 }

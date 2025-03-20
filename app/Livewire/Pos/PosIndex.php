@@ -150,7 +150,7 @@ class PosIndex extends Component
 
     public function render()
     {
-        $products = DB::table(Table::$product)->latest()->paginate($this->paginate);
+        $products = DB::table(Table::$product)->orderBy('id', 'desc')->paginate($this->paginate);
 
         return view('livewire.pos.pos-index', ['products' => $products]);
     }
