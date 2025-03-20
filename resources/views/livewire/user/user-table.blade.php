@@ -2,7 +2,7 @@
     <table x-data="{ showDecimal: false }" class="table-auto w-full">
         <thead class="sticky top-0 z-[1000]">
             <tr>
-                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-left font-semibold w-fit">
+                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-left font-semibold w-fit">
                     <div class="w-fit">
                         <button x-on:click="showInsert = true; $wire.call('clearForm');"
                             class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs">
@@ -10,13 +10,13 @@
                         </button>
                     </div>
                 </th>
-                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-center text-xs font-semibold" style="width: 100px !important;">
+                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-center text-xs font-semibold" style="width: 100px !important;">
                     ภาพ
                 </th>
-                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-start text-xs font-semibold" style="width: 200px !important;">
+                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-start text-xs font-semibold" style="width: 200px !important;">
                     ชื่อ
                 </th>
-                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-700 text-center text-xs font-semibold">
+                <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-center text-xs font-semibold">
                     {{-- actions --}}
                 </th>
             </tr>

@@ -25,12 +25,12 @@ class SizeIndex extends Component
 
         $tbSize = Table::$size;
         $this->validate([
-            'name' => "required|string|max:20|unique:{$tbSize},name",
+            'name' => "required|string|max:50|unique:{$tbSize},name",
             'price' => 'required|numeric|max:9999',
         ], [
             'name.required' => 'กรอกชื่อ',
             'name.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
-            'name.max' => 'ชื่อสูงสุด 20 ตัว',
+            'name.max' => 'ชื่อสูงสุด 50 ตัว',
             'name.unique' => 'ชื่อนี้มีอยู่แล้ว',
             'price.required' => 'กรอกราคา',
             'price.max' => 'ราคาสูงสุด (9999)',
@@ -86,7 +86,7 @@ class SizeIndex extends Component
         }
         catch(\Exception $e) {
             DB::rollBack();
-            
+
             $message = <<<HTML
                 <div class="text-gray-600">ลบ</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
@@ -115,12 +115,12 @@ class SizeIndex extends Component
 
         $tbSize = Table::$size;
         $this->validate([
-            'name' => "required|string|max:20|unique:{$tbSize},name,$this->id,id",
+            'name' => "required|string|max:50|unique:{$tbSize},name,$this->id,id",
             'price' => 'required|numeric|max:9999',
         ], [
             'name.required' => 'กรอกชื่อ',
             'name.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
-            'name.max' => 'ชื่อสูงสุด 20 ตัว',
+            'name.max' => 'ชื่อสูงสุด 50 ตัว',
             'name.unique' => 'ชื่อนี้มีอยู่แล้ว',
             'price.required' => 'กรอกราคา',
             'price.max' => 'ราคาสูงสุด (9999)',
@@ -146,7 +146,7 @@ class SizeIndex extends Component
         }
         catch(\Exception $e) {
             DB::rollBack();
-            
+
             $message = <<<HTML
                 <div class="text-gray-600">อัพเดท</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>

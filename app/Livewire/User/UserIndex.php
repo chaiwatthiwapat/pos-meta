@@ -32,13 +32,13 @@ class UserIndex extends Component
 
         $tbUser = Table::$users;
         $this->validate([
-            'name' => "required|string|max:20|unique:{$tbUser},name",
+            'name' => "required|string|max:50|unique:{$tbUser},name",
             'password' => 'required|string|min:6|max:16|confirmed',
             'image' => 'nullable|image|max:12288'
         ], [
             'name.required' => 'กรอกชื่อ',
             'name.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
-            'name.max' => 'ชื่อสูงสุด 20 ตัว',
+            'name.max' => 'ชื่อสูงสุด 50 ตัว',
             'name.unique' => 'ชื่อนี้มีอยู่แล้ว',
             'password.required' => 'กรอกรหัสผ่าน',
             'password.min' => 'อย่างน้อย 6',
@@ -103,7 +103,7 @@ class UserIndex extends Component
         }
         catch(\Exception $e) {
             DB::rollBack();
-            
+
             $message = <<<HTML
                 <div class="text-gray-600">ลบ</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
@@ -135,13 +135,13 @@ class UserIndex extends Component
 
         $tbUser = Table::$users;
         $this->validate([
-            'name' => "required|string|max:20|unique:{$tbUser},name,$this->id,id",
+            'name' => "required|string|max:50|unique:{$tbUser},name,$this->id,id",
             'password' => 'nullable|string|min:6|max:16|confirmed',
             'image' => 'nullable|image|max:12288'
         ], [
             'name.required' => 'กรอกชื่อ',
             'name.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
-            'name.max' => 'ชื่อสูงสุด 20 ตัว',
+            'name.max' => 'ชื่อสูงสุด 50 ตัว',
             'name.unique' => 'ชื่อนี้มีอยู่แล้ว',
             'password.min' => 'อย่างน้อย 6',
             'password.max' => 'มากสุด 16',
@@ -181,7 +181,7 @@ class UserIndex extends Component
         }
         catch(\Exception $e) {
             DB::rollBack();
-           
+
             $message = <<<HTML
                 <div class="text-gray-600">อัพเดท</div>
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>

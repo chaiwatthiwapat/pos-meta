@@ -53,9 +53,9 @@
                     <div>
                         <div class="text-gray-600 text-sm">จำนวน</div>
                         <div class="flex items-center text-sm font-semibold text-gray-700">
-                            <button x-on:click="product.qty > 1 ? product.qty-- : null" class="select-none px-3 py-2 bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300 duration-200">-</button>
+                            <button x-on:click="product.qty > 1 ? product.qty-- : null" class="select-none px-3 py-2 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200">-</button>
                             <div x-text="product.qty" class="w-[40px] text-center select-none"></div>
-                            <button x-on:click="product.qty++" class="select-none px-3 py-2 bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300 duration-200">+</button>
+                            <button x-on:click="product.qty++" class="select-none px-3 py-2 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200">+</button>
                         </div>
                     </div>
 

@@ -20,11 +20,11 @@
             <thead class="sticky top-0">
                 <thead class="sticky top-0 bg-blue-100 shadow-md">
                     <tr>
-                        <th class="px-5 py-3 text-blue-700 text-left text-xs font-semibold">#</th>
-                        <th class="px-5 py-3 text-blue-700 text-left text-xs font-semibold">สินค้า</th>
-                        <th class="px-5 py-3 text-blue-700 text-right text-xs font-semibold">ราคา</th>
-                        <th class="px-5 py-3 text-blue-700 text-center text-xs font-semibold">จำนวน</th>
-                        <th class="px-5 py-3 text-blue-700 text-center text-xs font-semibold w-[100px]">ลบ</th>
+                        <th class="px-5 py-3 text-blue-500 text-left text-xs font-semibold">#</th>
+                        <th class="px-5 py-3 text-blue-500 text-left text-xs font-semibold">สินค้า</th>
+                        <th class="px-5 py-3 text-blue-500 text-right text-xs font-semibold">ราคา</th>
+                        <th class="px-5 py-3 text-blue-500 text-center text-xs font-semibold">จำนวน</th>
+                        <th class="px-5 py-3 text-blue-500 text-center text-xs font-semibold w-[100px]">ลบ</th>
                     </tr>
                 </thead>
             </thead>
@@ -41,7 +41,7 @@
                                 <div class="font-bold text-sm text-gray-900" x-text="item.product.name"></div>
 
                                 <!-- Dropdown Button -->
-                                <button x-on:click="open = !open" class="text-blue-500 hover:text-blue-700 text-xs">
+                                <button x-on:click="open = !open" class="text-blue-500 hover:text-blue-500 text-xs">
                                     ▼
                                 </button>
                             </div>
@@ -86,7 +86,7 @@
                                         data[index].amount = qty * (data[index].product.price + data[index].optionPrice);
                                         updateCartItem();
                                     "
-                                    class="px-2 py-1 bg-blue-200 text-blue-700 rounded hover:bg-blue-300 duration-200">
+                                    class="px-2 py-1 bg-blue-200 text-blue-500 rounded hover:bg-blue-300 duration-200">
                                     -
                                 </button>
 
@@ -101,7 +101,7 @@
                                         data[index].amount = qty * (data[index].product.price + data[index].optionPrice);
                                         updateCartItem();
                                     "
-                                    class="px-2 py-1 bg-blue-200 text-blue-700 rounded hover:bg-blue-300 duration-200">
+                                    class="px-2 py-1 bg-blue-200 text-blue-500 rounded hover:bg-blue-300 duration-200">
                                     +
                                 </button>
 

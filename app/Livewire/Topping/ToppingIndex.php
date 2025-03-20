@@ -25,12 +25,12 @@ class ToppingIndex extends Component
 
         $tbType = Table::$topping;
         $this->validate([
-            'name' => "required|string|max:20|unique:{$tbType},name",
+            'name' => "required|string|max:50|unique:{$tbType},name",
             'price' => 'required|numeric|max:9999',
         ], [
             'name.required' => 'กรอกชื่อ',
             'name.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
-            'name.max' => 'ชื่อสูงสุด 20 ตัว',
+            'name.max' => 'ชื่อสูงสุด 50 ตัว',
             'name.unique' => 'ชื่อนี้มีอยู่แล้ว',
             'price.required' => 'กรอกราคา',
             'price.numeric' => 'ตัวเลขเท่านั้น',
@@ -115,12 +115,12 @@ class ToppingIndex extends Component
 
         $tbType = Table::$topping;
         $this->validate([
-            'name' => "required|string|max:20|unique:{$tbType},name,$this->id,id",
+            'name' => "required|string|max:50|unique:{$tbType},name,$this->id,id",
             'price' => 'required|numeric|max:9999',
         ], [
             'name.required' => 'กรอกชื่อ',
             'name.string' => 'ห้ามใช้ตัวอักษรพิเศษ',
-            'name.max' => 'ชื่อสูงสุด 20 ตัว',
+            'name.max' => 'ชื่อสูงสุด 50 ตัว',
             'name.unique' => 'ชื่อนี้มีอยู่แล้ว',
             'price.required' => 'กรอกราคา',
             'price.max' => 'ราคาสูงสุด (9999)',
