@@ -8,15 +8,15 @@
 
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="{{ asset('css/global.css') }}">
-        
+
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap');
 
             * {
-                font-family: "Kanit", sans-serif;
+                font-family: "Noto Sans Thai", sans-serif;
             }
         </style>
-        
+
         @livewireStyles
     </head>
     <body class="h-screen w-screen overflow-hidden">
@@ -27,7 +27,7 @@
             </nav>
 
             <div class="flex">
-                <aside :class="{ 'ml-[-260px]': !showSidebar }" class="transition-all duration-200">
+                <aside :class="showSidebar ? 'ml-0' : '-ml-64'" class="transition-all duration-200 absolute xl:relative z-[1000]">
                     @livewire('layouts.sidebar')
                 </aside>
 

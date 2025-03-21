@@ -5,7 +5,7 @@
     class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[2000] transition-opacity duration-300">
 
     {{--  --}}
-    <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-lg relative">
+    <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-lg mx-4 relative">
 
         {{-- ปุ่มปิด Modal --}}
         <button type="button" x-on:click="showEdit = false"

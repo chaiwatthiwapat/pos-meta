@@ -17,7 +17,7 @@ class ProductIndex extends Component
     use Table;
     use WithPagination;
 
-    public int $paginate = 5;
+    public int $paginate = 10;
 
     // @model
     public ?int $id = null;

@@ -104,7 +104,7 @@ class PosIndex extends Component
                     $ordersId = sprintf('%05d', (int) substr($lastOrdersId, 8) + 1); // 00001 => 00002
                     $ordersId = (int) ($date.$ordersId); // '20250301' + '00001' = '2025030100001'
                 }
-             
+
                 DB::table(Table::$orders)
                     ->insert([
                         'orders_id' => $ordersId,
@@ -138,7 +138,7 @@ class PosIndex extends Component
         catch(\Exception $e) {
             DB::rollBack();
             throw $e;
-            
+
             $message = <<<HTML
                 <div class="text-red-700">เกิดข้อผิดพลาดบางอย่าง</div>
                 <div class="text-red-700">กรุณาลองใหม่</div>
@@ -150,8 +150,8 @@ class PosIndex extends Component
 
     public function render()
     {
-        $products = DB::table(Table::$product)->orderBy('id', 'desc')->paginate($this->paginate);
-
-        return view('livewire.pos.pos-index', ['products' => $products]);
+        return view('livewire.pos.pos-index', [
+            'products' => DB::table(Table::$product)->orderBy('id', 'desc')->paginate($this->paginate)
+        ]);
     }
 }
