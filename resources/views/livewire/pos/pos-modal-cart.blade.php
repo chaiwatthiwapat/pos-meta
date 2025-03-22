@@ -6,16 +6,25 @@
         },
         get amount() {
             return this.data.reduce((sum, item) => sum + (item.amount || 0), 0);
-        }
+        },
+        isLg: false
     }"
-    x-init="$store.cart = $data"
+    x-init="
+        $store.cart = $data;
+        const checkScreen = () => {
+            showCart = window.matchMedia('(min-width: 1024px)').matches ? true : false;
+        };
+        checkScreen();
+        window.addEventListener('resize', checkScreen);
+    "
     x-on:clear-cart.window="
         localStorage.setItem('cartItem', null);
         $store.cart.data = JSON.parse(localStorage.getItem('cartItem')) || [];
     "
-    class="flex-grow bg-white p-3 rounded-lgborder">
+    x-show="showCart"
+    class="max-w-lg w-full bg-white p-8 rounded-lg border top-[50%] left-[50%] lg:top-0 lg:left-0 translate-x-[-50%] translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 absolute lg:relative z-[2000]" style="display: none;">
     {{--  --}}
-    <div class="h-[500px] w-[500px] overflow-auto">
+    <div class="w-full h-[300px] lg:h-[500px] relative overflow-auto">
         <table class="w-full">
             <thead class="sticky top-0">
                 <thead class="sticky top-0 bg-blue-100 shadow-md">
@@ -24,7 +33,7 @@
                         <th class="px-5 py-3 text-blue-500 text-left text-xs font-semibold">สินค้า</th>
                         <th class="px-5 py-3 text-blue-500 text-right text-xs font-semibold">ราคา</th>
                         <th class="px-5 py-3 text-blue-500 text-center text-xs font-semibold">จำนวน</th>
-                        <th class="px-5 py-3 text-blue-500 text-center text-xs font-semibold w-[100px]">ลบ</th>
+                        <th class="px-5 py-3 text-blue-500 text-center text-xs font-semibold w-4">ลบ</th>
                     </tr>
                 </thead>
             </thead>
@@ -107,7 +116,7 @@
 
                             </div>
                         </td>
-                        <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700 w-[100px]">
+                        <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700 w-24">
                             <button x-on:click="
                                 data.splice(index, 1);
                                 updateCartItem();
@@ -130,15 +139,20 @@
         </strong>
     </div>
     <div>
-        <button 
+        <button
             x-on:click="
                 let items = JSON.parse(localStorage.getItem('cartItem'));
                 items ? $wire.call('ordersInsert', items) : null;
             "
             type="submit" wire:loading.attr="disabled"
             class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-2 rounded-lg font-medium flex items-center justify-center w-full h-10">
-            <span wire:loading.class="hidden">ดำเนินการต่อ</span>
+            <span wire:loading.class="hidden" wire:target="ordersInsert">ดำเนินการต่อ</span>
             <div wire:loading wire:target="ordersInsert" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+        </button>
+
+        <button x-on:click="showCart = false" 
+            class="bg-blue-100 text-blue-500 hover:bg-blue-200 duration-200 px-5 py-2 rounded-lg font-medium flex items-center justify-center w-full h-10 mt-4 lg:hidden">
+            ปิด
         </button>
     </div>
 </div>

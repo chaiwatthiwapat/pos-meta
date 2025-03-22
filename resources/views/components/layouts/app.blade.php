@@ -21,12 +21,21 @@
     </head>
     <body class="h-screen w-screen overflow-hidden">
 
-        <div x-data="{ showSidebar: true }">
+        <div 
+            x-data="{ showSidebar: true }"
+            x-init="
+                const checkScreen = () => {
+                    showSidebar = window.matchMedia('(min-width: 1280px)').matches ? true : false;
+                };
+                checkScreen();
+                window.addEventListener('resize', checkScreen)
+            ">
+            {{--  --}}
             <nav>
                 @livewire('layouts.navbar')
             </nav>
 
-            <div class="flex">
+            <div class="flex w-full overflow-hidden">
                 <aside :class="showSidebar ? 'ml-0' : '-ml-64'" class="transition-all duration-200 absolute xl:relative z-[1000]">
                     @livewire('layouts.sidebar')
                 </aside>

@@ -8,11 +8,13 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class PosIndex extends Component
 {
     use Table;
     use Set;
+    use WithPagination;
 
     public int $paginate = 10;
     public ?object $productData = null;

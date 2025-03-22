@@ -122,9 +122,8 @@
             </tbody>
         </table>
     </div>
-
+    
     <div class="mt-4">
         {{ $ordersData->links('components.paginate') }}
     </div>
-
 </div>

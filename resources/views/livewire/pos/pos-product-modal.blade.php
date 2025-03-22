@@ -1,10 +1,10 @@
 <div
     x-data="{
-        product: { 
-            id: @entangle('id'), 
-            name: @entangle('name'), 
-            price: @entangle('price'), 
-            qty: @entangle('qty') 
+        product: {
+            id: @entangle('id'),
+            name: @entangle('name'),
+            price: @entangle('price'),
+            qty: @entangle('qty')
         },
         size: { name: '', price: 0 },
         type: { name: '', price: 0 },
@@ -13,7 +13,7 @@
             if(event.target.checked) {
                 this.topping.name.push(name);
                 this.topping.price.push(price);
-            } 
+            }
             else {
                 let index = this.topping.name.indexOf(name);
                 if(index !== -1) {
@@ -31,35 +31,35 @@
     }"
     x-show="showModalProduct"
     x-on:keydown.escape.window="showModalProduct = false"
-    style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+    style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[1000]">
     {{--  --}}
-    <div class="bg-white p-6 rounded-lg shadow-lg w-[600px]">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mx-4 relative overflow-hidden">
         <h2 data-modal-header class="text-xl font-bold mb-4">เมนู</h2>
 
         <div>
             <p class="text-gray-600 mb-2">
-                {{ $productData?->name }} 
+                {{ $productData?->name }}
                 <span class="text-blue-600 font-semibold">
-                    {{ $price }} 
+                    {{ $price }}
                 </span>
             </p>
 
             <div class="flex gap-4 p-4 bg-white rounded-lg shadow-lg">
-                <div class="max-w-[150px] max-h-[150px] aspect-square overflow-hidden rounded-lg border border-gray-200 shadow-md flex items-center justify-center">
+                <div class="w-24 h-24 overflow-hidden rounded-lg border border-gray-200 shadow-md flex items-center justify-center">
                     <img class="w-full h-full object-cover" src="{{ asset('storage/product-images/' . ($productData?->image ?? 'default.png')) }}" alt="pos product">
                 </div>
 
-                <div class="flex flex-col justify-between w-full">
-                    <div>
+                <div class="flex flex-col justify-between flex-1">
+                    <div class="mb-1">
                         <div class="text-gray-600 text-sm">จำนวน</div>
                         <div class="flex items-center text-sm font-semibold text-gray-700">
-                            <button x-on:click="product.qty > 1 ? product.qty-- : null" class="select-none px-3 py-2 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200">-</button>
+                            <button x-on:click="product.qty > 1 ? product.qty-- : null" class="select-none px-2 py-1 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200">-</button>
                             <div x-text="product.qty" class="w-[40px] text-center select-none"></div>
-                            <button x-on:click="product.qty++" class="select-none px-3 py-2 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200">+</button>
+                            <button x-on:click="product.qty++" class="select-none px-2 py-1 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200">+</button>
                         </div>
                     </div>
 
-                    <div class="px-4 py-3 bg-blue-50 text-blue-600 font-semibold rounded-lg">
+                    <div class="px-4 py-2 bg-blue-50 text-blue-600 font-semibold rounded-lg">
                         <span>ราคา:</span>
                         <span x-text="amount"></span>
                     </div>
