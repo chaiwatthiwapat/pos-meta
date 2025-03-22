@@ -1,16 +1,29 @@
 <div class="w-64 h-[calc(100vh-50px)] bg-white shadow-md p-4">
     <nav class="space-y-2 h-[90vh] overflow-auto">
         @php
-            $sidebarMenus = [
-                ['route' => 'home.index', 'label' => 'หน้าแรก'],
-                ['route' => 'pos.index', 'label' => 'ขาย'],
-                ['route' => 'orders.index', 'label' => 'รายการขาย'],
-                ['route' => 'product.index', 'label' => 'สินค้า'],
-                ['route' => 'size.index', 'label' => 'ไซต์'],
-                ['route' => 'type.index', 'label' => 'ประเภท'],
-                ['route' => 'topping.index', 'label' => 'ท็อปปิ้ง'],
-                ['route' => 'users.index', 'label' => 'ผู้ใช้งาน'],
-            ];
+            $sidebarMenus = [];
+
+            if(Auth::check()) {
+                if(Auth::user()->role == 'admin') {
+                    $sidebarMenus = [
+                        ['route' => 'home.index', 'label' => 'หน้าแรก'],
+                        ['route' => 'pos.index', 'label' => 'ขาย'],
+                        ['route' => 'orders.index', 'label' => 'รายการขาย'],
+                        ['route' => 'product.index', 'label' => 'สินค้า'],
+                        ['route' => 'size.index', 'label' => 'ไซต์'],
+                        ['route' => 'type.index', 'label' => 'ประเภท'],
+                        ['route' => 'topping.index', 'label' => 'ท็อปปิ้ง'],
+                        ['route' => 'users.index', 'label' => 'ผู้ใช้งาน'],
+                    ];
+                }
+                else if(Auth::user()->role == 'staff') {
+                    $sidebarMenus = [
+                        ['route' => 'home.index', 'label' => 'หน้าแรก'],
+                        ['route' => 'pos.index', 'label' => 'ขาย'],
+                        ['route' => 'orders.index', 'label' => 'รายการขาย'],
+                    ];
+                }
+            }
         @endphp
 
         @foreach ($sidebarMenus as $item)

@@ -1,4 +1,4 @@
-<div>
+<div x-data="{ grouped: false }">
     @php use App\Traits\Set; @endphp
 
     <div class="w-full max-h-[80vh] overflow-auto">
@@ -7,18 +7,21 @@
                 <tr>
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-left font-semibold w-24">
                         <div class="w-fit">
-                            <button class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs opacity-0 cursor-default">
-                                hidden
+                            <button x-on:click="grouped = !grouped" class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs">
+                                <span x-text="grouped ? 'กลุ่ม' : 'แยก'"></span>
                             </button>
                         </div>
                     </th>
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-left text-xs font-semibold w-32">
                         รหัสคำสั่งซื้อ
                     </th>
+                    <th x-show="grouped" class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-start text-xs font-semibold w-56" style="display: none;">
+                        ผู้ขาย
+                    </th>
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-start text-xs font-semibold w-56">
                         สินค้า
                     </th>
-                    <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-end text-xs font-semibold w-32">
+                    <th x-show="!grouped" class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-end text-xs font-semibold w-32">
                         จำนวน
                     </th>
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-right text-xs font-semibold w-32">
@@ -41,8 +44,47 @@
 
             <tbody>
 
-                @foreach($ordersData as $row)
-                    <tr>
+                @foreach($orders as $row)
+                    <tr x-show="grouped">
+                        <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
+                            {{ $loop->iteration }}
+                        </td>
+                        <td class="px-5 py-3 border-b-2 border-blue-200 text-start text-xs font-semibold text-gray-700">
+                            {{ $row->orders_id }}
+                        </td>
+                        <td class="px-5 py-3 border-b-2 border-blue-200 text-start text-xs font-semibold text-gray-700">
+                            {{ $row->sale_name }}
+                        </td>
+                        <td class="px-5 py-3 border-b-2 border-blue-200 text-start text-xs font-semibold text-gray-700">
+                            {{ $this->countOrdersDetail($row->orders_id) }} รายการ
+                        </td>
+                        <td class="px-5 py-3 border-b-2 border-blue-200 text-right text-xs font-semibold text-gray-700">
+                            <span x-show="!showDecimal">{{ number_format($row->total_amount, 2) }}</span>
+                            <span x-show="showDecimal">{{ number_format($row->total_amount, 0) }}</span>
+                        </td>
+                        <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
+                            {{ Set::dmyThai($row->created_at) }}
+                        </td>
+                        <td class="px-5 py-3 border-b-2 border-blue-200 text-start text-xs font-semibold text-gray-700">
+                            {{-- empty --}}
+                        </td>
+                        <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
+                            <div class="flex justify-end gap-1">
+                                <button class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center">
+                                    พิมพ์
+                                </button>
+                                <button x-on:click="showDelete = true; $store.delete.id = {{ $row->id }}"
+                                    class="bg-red-500 text-white hover:bg-red-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center">
+                                    ลบ
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+                {{-- end orders --}}
+
+                @foreach($ordersDetail as $row)
+                    <tr x-show="!grouped">
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                             {{ $loop->iteration }}
                         </td>
@@ -60,7 +102,7 @@
                                 </button>
                             </div>
 
-                            <div x-show="open" x-on:click.away="open = false" class="bg-white border rounded-md shadow-md mt-2 min-w-40 p-2 absolute z-10">
+                            <div x-show="open" x-on:click.away="open = false" class="bg-white border rounded-md shadow-md mt-2 min-w-40 p-2 absolute z-10" style="display: none;">
                                 <div class="text-xs text-gray-600">
                                     <p>
                                         <span class="font-semibold whitespace-nowrap">สินค้า:</span>
@@ -118,12 +160,13 @@
                         </td>
                     </tr>
                 @endforeach
+                {{-- end orders detail --}}
 
             </tbody>
         </table>
     </div>
     
     <div class="mt-4">
-        {{ $ordersData->links('components.paginate') }}
+        {{ $ordersDetail->links('components.paginate') }}
     </div>
 </div>

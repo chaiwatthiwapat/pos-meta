@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders_topping', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('orders_id');
-            $table->string('topping_name');
-            $table->decimal('topping_price', 10, 2)->default(0.00);
+            $table->unsignedBigInteger('orders_id')->unique();
+            $table->string('sale_name');
+            $table->decimal('total_amount', 12, 2);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_orders_topping');
+        Schema::dropIfExists('orders');
     }
 };

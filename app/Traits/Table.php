@@ -10,5 +10,6 @@ trait Table
     public static string $type = 'types';
     public static string $topping = 'toppings';
     public static string $orders = 'orders';
+    public static string $ordersDetail = 'orders_detail';
     public static string $ordersTopping = 'orders_topping';
 }

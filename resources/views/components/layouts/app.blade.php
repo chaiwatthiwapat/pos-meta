@@ -25,20 +25,24 @@
             x-data="{ showSidebar: true }"
             x-init="
                 const checkScreen = () => {
-                    showSidebar = window.matchMedia('(min-width: 1280px)').matches ? true : false;
+                    showSidebar = window.matchMedia('(min-width: 1281px)').matches ? true : false;
                 };
                 checkScreen();
                 window.addEventListener('resize', checkScreen)
             ">
             {{--  --}}
-            <nav>
-                @livewire('layouts.navbar')
-            </nav>
+            @if(Auth::check())
+                <nav>
+                    @livewire('layouts.navbar')
+                </nav>
+            @endif
 
-            <div class="flex w-full overflow-hidden">
-                <aside :class="showSidebar ? 'ml-0' : '-ml-64'" class="transition-all duration-200 absolute xl:relative z-[1000]">
-                    @livewire('layouts.sidebar')
-                </aside>
+            <div class="flex w-full h-[calc(100vh-50px)] overflow-hidden">
+                @if(Auth::check())
+                    <aside :class="showSidebar ? 'ml-0' : '-ml-64'" class="transition-all duration-200 absolute xl:relative z-[1000]">
+                        @livewire('layouts.sidebar')
+                    </aside>
+                @endif
 
                 <main class="p-6 w-full h-[calc(100vh-50px)]">
                     @include('components.alert')
