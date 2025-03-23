@@ -75,7 +75,7 @@
         </div>
 
         <div class="mt-4 flex justify-end gap-1">
-            <button x-on:click="showModalProduct = false" class="bg-blue-200 text-blue-500 hover:bg-blue-100 duration-200 px-5 py-2 rounded-lg">
+            <button x-on:click="showModalProduct = false" class="bg-blue-200 text-blue-500 hover:bg-blue-50 duration-200 px-5 py-2 rounded-lg">
                 ปิด
             </button>
 

@@ -1,10 +1,10 @@
-<div x-data="{ grouped: false }">
+<div x-data="{ grouped: true }">
     @php use App\Traits\Set; @endphp
 
     <div class="w-full max-h-[80vh] overflow-auto">
         <table x-data="{ showDecimal: false }" class="table-fixed w-full">
             <thead class="sticky top-0 z-[501]">
-                <tr>
+                <tr class="hover:bg-blue-50">
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-left font-semibold w-24">
                         <div class="w-fit">
                             <button x-on:click="grouped = !grouped; $wire.call('setPage', 1)" class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs">
@@ -45,7 +45,7 @@
             <tbody>
 
                 @foreach($orders as $row)
-                    <tr x-show="grouped">
+                    <tr x-show="grouped" class="hover:bg-blue-50">
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                             {{ $loop->iteration }}
                         </td>
@@ -84,7 +84,7 @@
                 {{-- end orders --}}
 
                 @foreach($ordersDetail as $row)
-                    <tr x-show="!grouped">
+                    <tr  class="hover:bg-blue-50" x-show="!grouped">
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                             {{ $loop->iteration }}
                         </td>
@@ -148,7 +148,12 @@
                             {{-- empty --}}
                         </td>
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
-                            <div class="flex justify-end gap-1">
+                            <div x-show="!grouped" class="opacity-0">
+                                <button class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center">
+                                    hidden
+                                </button>
+                            </div>
+                            <div x-show="grouped" class="flex justify-end gap-1">
                                 <button class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center">
                                     พิมพ์
                                 </button>

@@ -28,7 +28,7 @@
         <table class="table-fixed w-full">
             <thead class="sticky top-0">
                 <thead class="sticky top-0 bg-blue-100 shadow-md">
-                    <tr>
+                    <tr class="hover:bg-blue-50">
                         <th class="px-1 py-3 text-blue-500 text-center text-xs font-semibold w-12">#</th>
                         <th class="px-1 py-3 text-blue-500 text-left text-xs font-semibold w-28">สินค้า</th>
                         <th class="px-1 py-3 text-blue-500 text-right text-xs font-semibold w-24 pr-4">ราคา</th>
@@ -40,7 +40,7 @@
 
             <tbody>
                 <template x-for="(item, index) in data" :key="index">
-                    <tr>
+                    <tr class="hover:bg-blue-50">
                         <td class="px-1 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                             <span x-text="index + 1"></span>
                         </td>

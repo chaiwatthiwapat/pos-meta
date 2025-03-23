@@ -4,7 +4,7 @@
     <div class="w-full max-h-[80vh] overflow-auto">
         <table x-data="{ showDecimal: false }" class="table-fixed w-full">
             <thead class="sticky top-0 z-[501]">
-                <tr>
+                <tr class="hover:bg-blue-50">
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-left font-semibold w-24">
                         <div class="w-fit">
                             <button x-on:click="showInsert = true; $wire.call('clearForm')"
@@ -37,7 +37,7 @@
             <tbody>
 
                 @foreach($productData as $row)
-                    <tr>
+                    <tr class="hover:bg-blue-50">
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                             {{ $loop->iteration }}
                         </td>

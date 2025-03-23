@@ -78,6 +78,17 @@ class SizeIndex extends Component
         DB::beginTransaction();
 
         try {
+            if(DB::table(Table::$size)->count() < 1) {
+                $message = <<<HTML
+                    <div class="text-gray-600">ลบ</div>
+                    <div class="text-red-700">ลบรายการสุดท้ายไม่ได้</div>
+                    <div class="text-red-700">ต้องมีมากกว่า 1 รายการ</div>
+                HTML;
+                $this->dispatch('alert', ['message' => $message]);
+                $this->dispatch('hidden-delete');
+                return;
+            }
+
             DB::table(Table::$size)->where('id', $id)->delete();
             $this->dispatch('alert', ['message' => '<div class="text-green-700">ลบสำเร็จ</div>']);
             $this->dispatch('hidden-delete');
