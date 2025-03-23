@@ -7,7 +7,7 @@
                 <tr>
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-left font-semibold w-24">
                         <div class="w-fit">
-                            <button x-on:click="grouped = !grouped" class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs">
+                            <button x-on:click="grouped = !grouped; $wire.call('setPage', 1)" class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs">
                                 <span x-text="grouped ? 'กลุ่ม' : 'แยก'"></span>
                             </button>
                         </div>
@@ -19,7 +19,7 @@
                         ผู้ขาย
                     </th>
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-start text-xs font-semibold w-56">
-                        สินค้า
+                        สินค้า <span x-show="grouped">/รายการ</span>
                     </th>
                     <th x-show="!grouped" class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-end text-xs font-semibold w-32">
                         จำนวน
@@ -166,7 +166,11 @@
         </table>
     </div>
     
-    <div class="mt-4">
+    <div x-show="grouped" class="mt-4">
+        {{ $orders->links('components.paginate') }}
+    </div>
+
+    <div x-show="!grouped" class="mt-4">
         {{ $ordersDetail->links('components.paginate') }}
     </div>
 </div>
