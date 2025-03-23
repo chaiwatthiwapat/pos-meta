@@ -3,6 +3,7 @@
     x-show="showAlert"
     x-init="$store.alert = $data"
     x-on:keydown.escape.window="showAlert = false"
+    x-on:keydown.window.enter="showAlert = false"
     style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[3000]">
     {{-- Stop trying to control. --}}
 

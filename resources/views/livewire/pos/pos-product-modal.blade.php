@@ -31,9 +31,10 @@
     }"
     x-show="showModalProduct"
     x-on:keydown.escape.window="showModalProduct = false"
-    style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[1000]">
+    style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[3000]">
     {{--  --}}
     <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mx-4 relative overflow-hidden">
+        {{-- Header --}}
         <h2 data-modal-header class="text-xl font-bold mb-4">เมนู</h2>
 
         <div>
@@ -66,9 +67,11 @@
                 </div>
             </div>
 
-            @include('livewire.pos.pos-product-size')
-            @include('livewire.pos.pos-product-type')
-            @include('livewire.pos.pos-product-topping')
+            <div>
+                @include('livewire.pos.pos-product-size')
+                @include('livewire.pos.pos-product-type')
+                @include('livewire.pos.pos-product-topping')
+            </div>
         </div>
 
         <div class="mt-4 flex justify-end gap-1">

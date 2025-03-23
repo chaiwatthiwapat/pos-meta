@@ -1,7 +1,7 @@
-<div>
+<div x-data="{ name: @entangle('name'), password: @entangle('password') }" class="min-h-[50vh] flex items-center justify-center">
     {{-- Nothing in the world is as soft and yielding as water. --}}
 
-    <div class="w-full max-w-lg m-auto relative p-8 rounded-lg border">
+    <div class="w-full max-w-lg mx-4 relative p-8 rounded-lg border">
         <form wire:submit="login">
             <p class="text-gray-600 mb-4 text-center text-2xl">
                 เข้าสู่ระบบ POS
@@ -15,28 +15,37 @@
                     @endforeach
                 </div>
             @endif
-    
+
            <div x-data="{ showPassword: false }">
                 {{-- ชื่อผู้ใช้งาน --}}
                 <div class="mb-4">
                     <label class="text-gray-600 font-medium">ชื่อ</label>
-                    <input wire:model="name" type="text"
+                    <input x-model="name" type="text"
                         class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none">
                 </div>
-    
+
                 {{-- รหัสผ่าน --}}
                 <div class="mb-4">
                     <label class="text-gray-600 font-medium">รหัสผ่าน</label>
-                    <input wire:model="password" :type="showPassword ? 'text' : 'password'"
+                    <input x-model="password" :type="showPassword ? 'text' : 'password'"
                         class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 outline-none">
                 </div>
-    
+
                 <div class="mb-4">
                     <input id="show-password" x-on:click="showPassword = !showPassword" type="checkbox">
                     <label for="show-password" class="text-gray-600 font-medium select-none cursor-pointer">ดูรหัสผ่าน</label>
                 </div>
            </div>
-    
+
+           <div class="flex gap-3">
+                <button type="button" x-on:click="name = 'admin'; password = 'password';" class="px-3 py-2 rounded-lg text-center flex items-center justify-center gap-1 text-blue-500 bg-blue-100">
+                    😎 Admin
+                </button>
+                <button type="button" x-on:click="name = 'staff'; password = 'password';" class="px-3 py-2 rounded-lg text-center flex items-center justify-center gap-1 text-green-500 bg-green-100">
+                    😎 Staff
+                </button>
+           </div>
+
             {{-- ปุ่มต่าง ๆ --}}
             <div class="flex justify-end">
                 <button type="submit" wire:loading.attr="disabled"

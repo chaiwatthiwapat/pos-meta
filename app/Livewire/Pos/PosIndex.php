@@ -75,7 +75,7 @@ class PosIndex extends Component
     }
 
     // @insert
-    public function ordersInsert(array $data): void {
+    public function ordersInsert(array $data, array $money): void {
         DB::beginTransaction();
 
         try {
@@ -140,11 +140,14 @@ class PosIndex extends Component
                     'orders_id' => $ordersId,
                     'sale_name' => Auth::user()->name,
                     'total_amount' => Set::number($totalAmount),
+                    'get_money' => Set::number($money['get_money']),
+                    'change_money' => Set::number($money['change_money']),
                     'created_at' => now()
                 ]);
 
             $this->dispatch('alert', ['message' => '<div class="text-green-700">สำเร็จ</div>']);
             $this->dispatch('clear-cart');
+            $this->dispatch('hidden-payment');
 
             DB::commit();
         }

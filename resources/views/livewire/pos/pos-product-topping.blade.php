@@ -11,6 +11,7 @@
                     <input type="checkbox" name="topping"
                         value="topping{{ $loop->index }}"
                         class="hidden peer"
+                        x-on:refresh-options.window="$el.checked ? $el.click() : null"
                         x-on:change="updateTopping('{{ $row->name }}', {{ $row->price }}, $event)">
 
                     <div class="px-4 py-2 border border-gray-300 rounded-lg bg-white shadow-md text-gray-600

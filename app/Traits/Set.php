@@ -52,8 +52,8 @@ trait Set
     }
 
     // @date พศ.
-    public static function dmyThai($GetDate): ?string {
-        if (is_null($GetDate)) {
+    public static function dmyThai($date): ?string {
+        if (is_null($date)) {
             return null; // คืนค่า null หากไม่มีวันที่
         }
 
@@ -64,28 +64,28 @@ trait Set
             'Y-m-d',         // รูปแบบวันที่ธรรมดา
         ];
 
-        $DateTime = null;
+        $dateTime = null;
 
         // แปลงวันที่ด้วยรูปแบบที่รองรับ
         foreach ($formats as $format) {
-            $DateTime = \DateTime::createFromFormat($format, $GetDate);
-            if ($DateTime) {
+            $dateTime = \DateTime::createFromFormat($format, $date);
+            if ($dateTime) {
                 break; // หากสำเร็จ ให้ออกจาก loop
             }
         }
 
         // คืนค่า null หากวันที่ไม่ตรงกับรูปแบบใดเลย
-        if (!$DateTime) {
+        if (!$dateTime) {
             return null;
         }
 
         // ดึงวัน เดือน ปี
-        $Day = $DateTime->format('d');
-        $Month = $DateTime->format('m');
-        $Year = $DateTime->format('Y') + 543; // แปลงปี ค.ศ. เป็นปี พ.ศ.
+        $day = $dateTime->format('d');
+        $month = $dateTime->format('m');
+        $year = $dateTime->format('Y') + 543; // แปลงปี ค.ศ. เป็นปี พ.ศ.
 
         // รวมผลลัพธ์
-        return "{$Day}/{$Month}/{$Year}";
+        return "{$day}/{$month}/{$year}";
     }
 }
 

@@ -11,12 +11,12 @@ class Login extends Component
     public string $password = '';
 
     public function login() {
-        $credentials = [
+        $account = [
             'name' => $this->name,
             'password' => $this->password,
         ];
 
-        if(Auth::attempt($credentials)) {
+        if(Auth::attempt($account)) {
             session()->regenerate();
             return $this->redirectRoute('home.index', navigate: true);
         } 
