@@ -1,4 +1,4 @@
-<div x-show="showDelete" x-init="$store.delete = $data" x-on:hidden-delete.window="showDelete = false" style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[3000]">
+<div x-show="showDelete" x-init="$store.delete = $data" x-on:hidden-delete.window="showDelete = false" style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900/50 z-[3000]">
     {{-- Stop trying to control. --}}
 
     <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mx-4 relative">

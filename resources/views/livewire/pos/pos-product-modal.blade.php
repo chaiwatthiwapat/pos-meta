@@ -31,7 +31,7 @@
     }"
     x-show="showModalProduct"
     x-on:keydown.escape.window="showModalProduct = false"
-    style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-[3000]">
+    style="display: none" class="fixed inset-0 flex items-center justify-center bg-gray-900/50 z-[3000]">
     {{--  --}}
     <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mx-4 relative overflow-hidden">
         {{-- Header --}}
@@ -46,7 +46,7 @@
             </p>
 
             <div class="flex gap-4 p-4 bg-white rounded-lg shadow-lg">
-                <div class="w-24 h-24 overflow-hidden rounded-lg border border-gray-200 shadow-md flex items-center justify-center">
+                <div class="w-24 h-24 overflow-hidden rounded-lg border border-gray-200  border-gray-200 shadow-md flex items-center justify-center">
                     <img class="w-full h-full object-cover" src="{{ asset('storage/product-images/' . ($productData?->image ?? 'default.png')) }}" alt="pos product">
                 </div>
 
@@ -54,9 +54,13 @@
                     <div class="mb-1">
                         <div class="text-gray-600 text-sm">จำนวน</div>
                         <div class="flex items-center text-sm font-semibold text-gray-700">
-                            <button x-on:click="product.qty > 1 ? product.qty-- : null" class="select-none px-2 py-1 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200">-</button>
+                            <button x-on:click="product.qty > 1 ? product.qty-- : null" class="select-none px-2 py-1 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200 cursor-pointer">
+                                -
+                            </button>
                             <div x-text="product.qty" class="w-[40px] text-center select-none"></div>
-                            <button x-on:click="product.qty++" class="select-none px-2 py-1 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200">+</button>
+                            <button x-on:click="product.qty++" class="select-none px-2 py-1 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200 cursor-pointer">
+                                +
+                            </button>
                         </div>
                     </div>
 
@@ -75,7 +79,7 @@
         </div>
 
         <div class="mt-4 flex justify-end gap-1">
-            <button x-on:click="showModalProduct = false" class="bg-blue-200 text-blue-500 hover:bg-blue-50 duration-200 px-5 py-2 rounded-lg">
+            <button x-on:click="showModalProduct = false" class="bg-gray-200 text-gray-700 hover:bg-gray-300 duration-200 px-4 py-3 rounded-lg font-medium text-xs cursor-pointer">
                 ปิด
             </button>
 
@@ -90,7 +94,7 @@
                     $store.alertMessage.message = '<span class=\'text-green-700\'>เพิ่มแล้ว</span>';
                     $store.alert.showAlert = true;
                 "
-                class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-2 rounded-lg font-medium flex items-center justify-center min-w-[80px]"
+                class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 rounded-lg font-medium text-xs cursor-pointer flex items-center justify-center min-w-[80px]"
             >
                 ตกลง
             </button>

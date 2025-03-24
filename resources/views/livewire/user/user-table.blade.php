@@ -7,8 +7,8 @@
                 <tr class="hover:bg-blue-50">
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-left font-semibold w-24">
                         <div class="w-fit">
-                            <button x-on:click="showInsert = true; $wire.call('clearForm');"
-                                class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs">
+                            <button x-on:click="showInsert = true; $wire.call('clearForm')"
+                                class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer text-xs">
                                 เพิ่ม
                             </button>
                         </div>
@@ -58,21 +58,19 @@
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                             <div class="flex justify-end gap-1">
                                 @if($row->id == 1 || $row->id == 2)
-                                    <button class="bg-blue-500 text-white opacity-25 px-5 py-3 rounded-lg font-medium flex items-center justify-center cursor-default">
+                                    <button class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 rounded-lg font-medium text-xs opacity-50" disabled>
                                         แก้ไข
                                     </button>
-
-                                    <button class="bg-red-500 text-white opacity-25 px-5 py-3 rounded-lg font-medium flex items-center justify-center cursor-default">
+                                    <button class="bg-red-500 text-white hover:bg-red-600 duration-200 px-4 py-3 rounded-lg font-medium text-xs opacity-50" disabled>
                                         ลบ
                                     </button>
                                 @else
                                     <button x-on:click="showEdit = true; $wire.call('clearForm'); $wire.call('edit', {{ $row->id }})"
-                                        class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center">
+                                        class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer text-xs">
                                         แก้ไข
                                     </button>
-
                                     <button x-on:click="showDelete = true; $store.delete.id = {{ $row->id }}"
-                                        class="bg-red-500 text-white hover:bg-red-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center">
+                                        class="bg-red-500 text-white hover:bg-red-600 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer text-xs">
                                         ลบ
                                     </button>
                                 @endif

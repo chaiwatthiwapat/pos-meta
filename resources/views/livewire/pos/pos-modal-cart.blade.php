@@ -22,7 +22,7 @@
         $store.cart.data = JSON.parse(localStorage.getItem('cartItem')) || [];
     "
     x-show="showCart"
-    class="max-w-lg w-full bg-white p-8 rounded-lg border top-[50%] left-[50%] lg:top-0 lg:left-0 translate-x-[-50%] translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 absolute lg:relative z-[2000]" style="display: none;">
+    class="max-w-lg w-full bg-white p-8 rounded-lg border border-gray-200  top-[50%] left-[50%] lg:top-0 lg:left-0 translate-x-[-50%] translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 absolute lg:relative z-[2000]" style="display: none;">
     {{--  --}}
     <div class="w-full h-[300px] lg:h-[500px] relative overflow-auto">
         <table class="table-fixed w-full">
@@ -49,13 +49,13 @@
                                 <!-- แสดงชื่อหลัก -->
                                 <span x-text="item.product.name.length > 20 ? item.product.name.slice(0, 20) + '...' : item.product.name" class="w-full overflow-hidden whitespace-nowrap"></span>
                                 <!-- Dropdown Button -->
-                                <button x-on:click="open = !open" class="text-blue-500 hover:text-blue-500 text-xs">
+                                <button x-on:click="open = !open" class="text-blue-500 hover:text-blue-500 text-xs cursor-pointer">
                                     ▼
                                 </button>
                             </div>
 
                             <!-- Dropdown Content -->
-                            <div x-show="open" x-on:click.away="open = false" class="bg-white border rounded-md shadow-md mt-2 min-w-40 p-2 absolute z-10">
+                            <div x-show="open" x-on:click.away="open = false" class="bg-white border border-gray-200  rounded-md shadow-md mt-2 min-w-40 p-2 absolute z-10">
                                 <div class="text-xs text-gray-600">
                                     <p>
                                         {{-- สินค้า --}}
@@ -99,7 +99,7 @@
                                         data[index].amount = qty * (data[index].product.price + data[index].optionPrice);
                                         updateCartItem();
                                     "
-                                    class="px-2 py-1 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200">
+                                    class="px-2 py-1 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200 cursor-pointer">
                                     -
                                 </button>
 
@@ -114,7 +114,7 @@
                                         data[index].amount = qty * (data[index].product.price + data[index].optionPrice);
                                         updateCartItem();
                                     "
-                                    class="px-2 py-1 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200">
+                                    class="px-2 py-1 bg-blue-200 text-blue-500 rounded-lg hover:bg-blue-300 duration-200 cursor-pointer">
                                     +
                                 </button>
 
@@ -126,7 +126,7 @@
                                 data.splice(index, 1);
                                 updateCartItem();
                             "
-                            class="bg-red-500 text-white hover:bg-red-600 duration-200 px-3 py-2 rounded-lg font-medium">
+                            class="bg-red-500 text-white hover:bg-red-600 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer text-xs">
                                 ลบ
                             </button>
                         </td>
@@ -136,7 +136,7 @@
         </table>
     </div>
 
-    <div class="px-1 py-3 rounded-lg border border-blue-200 text-center my-4">
+    <div class="px-1 py-3 rounded-lg border border-gray-200  border-blue-200 text-center my-4">
         รายการ:
         <strong
             class="text-blue-500"
@@ -147,14 +147,12 @@
         <button
             x-on:click="showPaymentModal = true; $store.payment.amount = amount"
             type="button" wire:loading.attr="disabled"
-            class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-2 rounded-lg font-medium flex items-center justify-center w-full h-10">
-            <span>
-                ดำเนินการต่อ
-            </span>
+            class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer text-xs w-full">
+            ดำเนินการต่อ
         </button>
 
-        <button x-on:click="showCart = false" 
-            class="bg-blue-100 text-blue-500 hover:bg-blue-200 duration-200 px-5 py-2 rounded-lg font-medium flex items-center justify-center w-full h-10 mt-4 lg:hidden">
+        <button x-on:click="showCart = false"
+            class="bg-blue-100 text-blue-500 hover:bg-blue-200 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer flex items-center justify-center w-full mt-4 lg:hidden">
             ปิด
         </button>
     </div>

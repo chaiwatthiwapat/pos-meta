@@ -7,7 +7,7 @@
                 <tr class="hover:bg-blue-50">
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-left font-semibold w-24">
                         <div class="w-fit">
-                            <button x-on:click="grouped = !grouped; $wire.call('setPage', 1)" class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center text-xs">
+                            <button x-on:click="grouped = !grouped; $wire.call('setPage', 1)" class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer text-xs">
                                 <span x-text="grouped ? 'กลุ่ม' : 'แยก'"></span>
                             </button>
                         </div>
@@ -70,11 +70,12 @@
                         </td>
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                             <div class="flex justify-end gap-1">
-                                <button class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center">
+                                <button type="button"
+                                    class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer">
                                     พิมพ์
                                 </button>
                                 <button x-on:click="showDelete = true; $store.delete.id = {{ $row->id }}"
-                                    class="bg-red-500 text-white hover:bg-red-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center">
+                                    class="bg-red-500 text-white hover:bg-red-600 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer">
                                     ลบ
                                 </button>
                             </div>
@@ -102,7 +103,7 @@
                                 </button>
                             </div>
 
-                            <div x-show="open" x-on:click.away="open = false" class="bg-white border rounded-md shadow-md mt-2 min-w-40 p-2 absolute z-10" style="display: none;">
+                            <div x-show="open" x-on:click.away="open = false" class="bg-white border border-gray-200  rounded-md shadow-md mt-2 min-w-40 p-2 absolute z-10" style="display: none;">
                                 <div class="text-xs text-gray-600">
                                     <p>
                                         <span class="font-semibold whitespace-nowrap">สินค้า:</span>
@@ -170,7 +171,7 @@
             </tbody>
         </table>
     </div>
-    
+
     <div x-show="grouped" class="mt-4">
         {{ $orders->links('components.paginate') }}
     </div>

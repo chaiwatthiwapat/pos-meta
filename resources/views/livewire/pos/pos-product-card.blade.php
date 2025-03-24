@@ -12,11 +12,11 @@
                     <div
                         x-data
                         x-on:click="
-                            showModalProduct = true; 
+                            showModalProduct = true;
                             $wire.call('product', {{ $product->id }});
                             $wire.dispatch('refresh-options');
                         "
-                        class="border rounded-lg p-2 lg:p-4 shadow-sm hover:border-blue-500 transition duration-200 bg-white cursor-pointer"
+                        class="border border-gray-200  rounded-lg p-2 lg:p-4 shadow-xs hover:border-blue-500 transition duration-200 bg-white cursor-pointer"
                     >
                         <img
                             class="w-20 h-20 lg:w-28 lg:h-28 mx-auto object-cover rounded-lg"
@@ -33,12 +33,12 @@
                         </div>
                     </div>
                 @endforeach
-    
+
             </div>
         </div>
 
         <div class="mt-4 lg:hidden">
-            <button x-on:click="showCart = true" class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-2 rounded-lg font-medium flex items-center justify-center w-full">
+            <button x-on:click="showCart = true" class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-2 rounded-lg font-medium cursor-pointer flex items-center justify-center w-full">
                 ตะกร้า
             </button>
         </div>
