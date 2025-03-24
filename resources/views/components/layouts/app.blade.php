@@ -6,7 +6,7 @@
 
         <title>{{ $title ?? 'Page Title' }}</title>
 
-        <script src="https://cdn.tailwindcss.com"></script>
+        {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
         <link rel="stylesheet" href="{{ asset('css/global.css') }}">
 
         <style>
@@ -17,11 +17,12 @@
             }
         </style>
 
+        @vite('resources/css/app.css')
         @livewireStyles
     </head>
     <body class="h-screen w-screen overflow-hidden">
 
-        <div 
+        <div
             x-data="{ showSidebar: true }"
             x-init="
                 const checkScreen = () => {
