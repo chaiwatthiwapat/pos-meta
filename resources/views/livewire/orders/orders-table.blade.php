@@ -7,7 +7,7 @@
                 <tr class="hover:bg-blue-50">
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-left font-semibold w-24">
                         <div class="w-fit">
-                            <button x-on:click="grouped = !grouped; $wire.call('setPage', 1)" class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer text-xs">
+                            <button x-on:click="grouped = !grouped; $wire.call('setPage', 1)" class="bg-blue-500 text-white hover:bg-blue-600 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium cursor-pointer text-xs">
                                 <span x-text="grouped ? 'กลุ่ม' : 'แยก'"></span>
                             </button>
                         </div>
@@ -38,6 +38,15 @@
                     </th>
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-center text-xs font-semibold w-48">
                         {{-- actions --}}
+                        <div class="flex justify-end">
+                            <button wire:click="excel" type="button" wire:loading.attr="disabled"
+                                class="bg-green-500 text-white hover:bg-green-600 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium text-xs cursor-pointer flex items-center justify-center min-w-[80px]">
+                                <span wire:loading.class="hidden">
+                                    Excel
+                                </span>
+                                <div wire:loading class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            </button>
+                        </div>
                     </th>
                 </tr>
             </thead>
@@ -69,13 +78,12 @@
                             {{-- empty --}}
                         </td>
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
-                            <div class="flex justify-end gap-1">
-                                <button type="button"
-                                    class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer">
+                            <div class="flex justify-end gap-1"> 
+                                <button type="button" class="bg-blue-500 text-white hover:bg-blue-600 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium cursor-pointer">
                                     พิมพ์
                                 </button>
                                 <button x-on:click="showDelete = true; $store.delete.id = {{ $row->id }}"
-                                    class="bg-red-500 text-white hover:bg-red-600 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer">
+                                    class="bg-red-500 text-white hover:bg-red-600 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium cursor-pointer">
                                     ลบ
                                 </button>
                             </div>
@@ -152,15 +160,6 @@
                             <div x-show="!grouped" class="opacity-0">
                                 <button class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center">
                                     hidden
-                                </button>
-                            </div>
-                            <div x-show="grouped" class="flex justify-end gap-1">
-                                <button class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center">
-                                    พิมพ์
-                                </button>
-                                <button x-on:click="showDelete = true; $store.delete.id = {{ $row->id }}"
-                                    class="bg-red-500 text-white hover:bg-red-600 duration-200 px-5 py-3 rounded-lg font-medium flex items-center justify-center">
-                                    ลบ
                                 </button>
                             </div>
                         </td>

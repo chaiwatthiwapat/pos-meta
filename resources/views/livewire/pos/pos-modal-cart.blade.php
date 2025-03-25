@@ -126,7 +126,7 @@
                                 data.splice(index, 1);
                                 updateCartItem();
                             "
-                            class="bg-red-500 text-white hover:bg-red-600 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer text-xs">
+                            class="bg-red-500 text-white hover:bg-red-600 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium cursor-pointer text-xs">
                                 ลบ
                             </button>
                         </td>
@@ -136,23 +136,23 @@
         </table>
     </div>
 
-    <div class="px-1 py-3 rounded-lg border border-gray-200  border-blue-200 text-center my-4">
+    <div class="px-1 py-3 rounded-lg border border-gray-200 text-center my-4">
         รายการ:
         <strong
             class="text-blue-500"
-            x-text="amount.toLocaleString()">
+            x-text="data.length">
         </strong>
     </div>
     <div>
         <button
             x-on:click="showPaymentModal = true; $store.payment.amount = amount"
             type="button" wire:loading.attr="disabled"
-            class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer text-xs w-full">
+            class="bg-blue-500 text-white hover:bg-blue-600 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium cursor-pointer text-xs w-full">
             ดำเนินการต่อ
         </button>
 
         <button x-on:click="showCart = false"
-            class="bg-blue-100 text-blue-500 hover:bg-blue-200 duration-200 px-4 py-3 rounded-lg font-medium cursor-pointer flex items-center justify-center w-full mt-4 lg:hidden">
+            class="bg-blue-100 text-blue-500 hover:bg-blue-200 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium cursor-pointer flex items-center justify-center w-full mt-4 lg:hidden">
             ปิด
         </button>
     </div>

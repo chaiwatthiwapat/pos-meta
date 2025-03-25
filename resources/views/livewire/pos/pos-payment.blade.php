@@ -52,13 +52,13 @@
 
         <div class="flex justify-between mt-4">
             <button x-on:click="clearMoney()" type="button"
-                class="bg-red-100 text-red-500 hover:bg-red-200 duration-200 px-4 py-3 rounded-lg font-medium text-xs cursor-pointer">
+                class="bg-red-100 text-red-500 hover:bg-red-200 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium text-xs cursor-pointer">
                 ล้าง
             </button> 
 
             <div class="flex gap-2">
                 <button type="button" x-on:click="showPaymentModal = false"
-                    class="bg-gray-200 text-gray-700 hover:bg-gray-300 duration-200 px-4 py-3 rounded-lg font-medium text-xs cursor-pointer">
+                    class="bg-gray-200 text-gray-700 hover:bg-gray-300 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium text-xs cursor-pointer">
                     ปิด
                 </button>
 
@@ -74,7 +74,7 @@
                         }
                     "
                     type="button" wire:loading.attr="disabled"
-                    class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 rounded-lg font-medium text-xs cursor-pointer flex items-center justify-center min-w-[80px]">
+                    class="bg-blue-500 text-white hover:bg-blue-600 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium text-xs cursor-pointer flex items-center justify-center min-w-[80px]">
                     {{--  --}}
                     <span wire:loading.class="hidden">ตกลง</span>
                     <div wire:loading class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
