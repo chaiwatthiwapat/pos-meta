@@ -39,21 +39,23 @@
                     <td>{{ $row->size_price }}</td>
                     <td>{{ $row->type_name }}</td>
                     <td>{{ $row->type_price }}</td>
-                    {{-- <td>
+
+                    <td>
                         @php
-                            $toppings = \DB::table(Table::$ordersTopping)
-                                ->where('orders_id', $row->orders_id)
-                                ->get()
+                            $toppings = $data['toppingsGrouped'][$row->orders_detail_id] ?? collect();
+                            $toppingList = $toppings
                                 ->map(fn($t) => "{$t->topping_name} ({$t->topping_price})")
                                 ->implode(', ');
                         @endphp
-
-                        {{ $toppings }}
+                        {{ $toppingList }}
                     </td>
+                    
                     <td>
-                        @php $tprice = \DB::table(Table::$ordersTopping)->where('orders_id', $row->orders_id)->pluck('topping_price')->sum(); @endphp
-                        {{ $tprice }}
-                    </td> --}}
+                        @php
+                            $tprice = $toppings->sum('topping_price');
+                        @endphp
+                        {{ number_format($tprice, 2) }}
+                    </td>
 
                     <td>{{ $row->quantity }}</td>
                     <td>{{ $row->amount }}</td>

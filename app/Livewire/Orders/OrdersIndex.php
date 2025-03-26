@@ -78,9 +78,16 @@ class OrdersIndex extends Component
             ->leftJoin(Table::$ordersDetail, Table::$orders.'.orders_id', '=', Table::$ordersDetail.'.orders_id')
             ->get();
 
+        $toppingsGrouped = DB::table(Table::$ordersTopping)
+            ->get()
+            ->groupBy('orders_detail_id');
+
         $orders = $orders->groupBy('orders_id');
 
-        $data = ['orders' => $orders];
+        $data = [
+            'orders' => $orders,
+            'toppingsGrouped' => $toppingsGrouped
+        ];
         // dd($data);
 
         return Excel::download(new OrdersExcel($data), 'orders.xlsx');
