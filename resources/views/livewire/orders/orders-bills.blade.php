@@ -46,13 +46,18 @@
                         </tr>
 
                         @php
-                            $toppings = \DB::table(App\Traits\Table::$ordersTopping)->where('orders_detail_id', $row->orders_detail_id)->get();
+                            $toppings = $this->toppingsGrouped()[$row->orders_detail_id] ?? collect();
                         @endphp
 
                         @foreach($toppings as $trow)
                             <tr>
-                                <td class="text-left pl-5">ประเภท: {{ $trow->topping_name }} ({{ number_format($row->quantity, 0) }} x {{ $trow->topping_price }})</td>
-                                <td class="text-right">{{ number_format($trow->topping_price * $row->quantity, 2) }}</td>
+                                <td class="text-left pl-5">
+                                    ประเภท: {{ $trow->topping_name }} 
+                                    ({{ number_format($row->quantity, 0) }} x {{ number_format($trow->topping_price, 2) }})
+                                </td>
+                                <td class="text-right">
+                                    {{ number_format($trow->topping_price * $row->quantity, 2) }}
+                                </td>
                             </tr>
                         @endforeach
                     @endforeach

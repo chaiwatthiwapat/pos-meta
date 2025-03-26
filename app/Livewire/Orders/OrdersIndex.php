@@ -40,6 +40,10 @@ class OrdersIndex extends Component
         return collect(session('ordersDetailBills'));
     }
 
+    public function toppingsGrouped(): Collection {
+        return collect(session('toppingsGrouped'));
+    }
+
     // @delete
     public function delete(?int $id = null): void {
         DB::beginTransaction();
@@ -97,9 +101,13 @@ class OrdersIndex extends Component
     public function bills(?int $ordersId) {
         $orders = DB::table(Table::$orders)->where('orders_id', $ordersId)->first();
         $ordersDetail = DB::table(Table::$ordersDetail)->where('orders_id', $ordersId)->get();
+        $toppingsGrouped = DB::table(Table::$ordersTopping)
+            ->get()
+            ->groupBy('orders_detail_id');
 
         session(['ordersBills' => $orders]);
         session(['ordersDetailBills' => $ordersDetail]);
+        session(['toppingsGrouped' => $toppingsGrouped]);
     }
 
     public function render()
