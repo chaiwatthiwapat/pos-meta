@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('orders_topping', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('orders_id');
             $table->string('topping_name');
             $table->decimal('topping_price', 10, 2)->default(0.00);
             $table->timestamps();

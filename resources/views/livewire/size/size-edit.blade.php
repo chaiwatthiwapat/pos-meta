@@ -44,18 +44,18 @@
             {{-- ปุ่มต่าง ๆ --}}
             <div class="flex justify-between gap-2">
                 <button type="button" wire:click="clearForm"
-                    class="bg-red-100 text-red-500 hover:bg-red-200 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium cursor-pointer text-xs">
+                    class="bg-red-100 text-red-500 hover:bg-red-200 duration-200 px-4 py-3 h-10 w-16 rounded-lg font-medium cursor-pointer text-xs">
                     ล้าง
                 </button>
 
                 <div class="flex gap-2">
                     <button type="button" x-on:click="showEdit = false"
-                        class="bg-gray-200 text-gray-700 hover:bg-gray-300 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium cursor-pointer text-xs">
+                        class="bg-gray-200 text-gray-700 hover:bg-gray-300 duration-200 px-4 py-3 h-10 w-16 rounded-lg font-medium cursor-pointer text-xs">
                         ปิด
                     </button>
 
                     <button type="submit" wire:loading.attr="disabled"
-                        class="bg-blue-500 text-white hover:bg-blue-600 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium cursor-pointer text-xs flex items-center justify-center min-w-[80px]">
+                        class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 h-10 w-16 rounded-lg font-medium cursor-pointer text-xs flex items-center justify-center w-16">
                         <span wire:loading.class="hidden">ตกลง</span>
                         <div wire:loading class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     </button>

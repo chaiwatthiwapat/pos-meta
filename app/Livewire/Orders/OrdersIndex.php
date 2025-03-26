@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class OrdersIndex extends Component
 {
@@ -19,6 +20,10 @@ class OrdersIndex extends Component
 
     public int $paginate = 10;
 
+    public function mount() {
+        session(['ordersBills' => null]);
+    }
+
     public function findOrdersTopping(?int $ordersId): Collection {
         return DB::table(Table::$ordersTopping)->where('orders_id', $ordersId)->get();
     }
@@ -27,6 +32,13 @@ class OrdersIndex extends Component
         return DB::table(Table::$ordersDetail)->where('orders_id', $ordersId)->count();
     }
 
+    public function ordersBills(): ?object {
+        return session('ordersBills');
+    }
+
+    public function ordersDetailBills(): Collection {
+        return collect(session('ordersDetailBills'));
+    }
 
     // @delete
     public function delete(?int $id = null): void {
@@ -61,30 +73,27 @@ class OrdersIndex extends Component
     // @end delete
 
     // @excel
-    public function excel() {
+    public function excel(): BinaryFileResponse {
         $orders = DB::table(Table::$orders)
             ->leftJoin(Table::$ordersDetail, Table::$orders.'.orders_id', '=', Table::$ordersDetail.'.orders_id')
             ->get();
-        
+
         $orders = $orders->groupBy('orders_id');
 
-        // foreach($orders as $row) {
-        //     $ordersDetail = DB::table(Table::$ordersDetail)
-        // }
-
-        $ordersDetail = DB::table(Table::$ordersDetail)->get();
-        $ordersTopping = DB::table(Table::$ordersTopping)->get();
-
-        $data = [
-            'orders' => $orders, 
-            'ordersDetail' => $ordersDetail, 
-            'ordersTopping' => $ordersTopping
-        ];
+        $data = ['orders' => $orders];
         // dd($data);
-        
+
         return Excel::download(new OrdersExcel($data), 'orders.xlsx');
     }
     // @end excel
+
+    public function bills(?int $ordersId) {
+        $orders = DB::table(Table::$orders)->where('orders_id', $ordersId)->first();
+        $ordersDetail = DB::table(Table::$ordersDetail)->where('orders_id', $ordersId)->get();
+
+        session(['ordersBills' => $orders]);
+        session(['ordersDetailBills' => $ordersDetail]);
+    }
 
     public function render()
     {

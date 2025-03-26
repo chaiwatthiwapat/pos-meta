@@ -79,7 +79,7 @@
         </div>
 
         <div class="mt-4 flex justify-end gap-1">
-            <button x-on:click="showModalProduct = false" class="bg-gray-200 text-gray-700 hover:bg-gray-300 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium text-xs cursor-pointer">
+            <button x-on:click="showModalProduct = false" class="bg-gray-200 text-gray-700 hover:bg-gray-300 duration-200 px-4 py-3 h-10 w-16 rounded-lg font-medium text-xs cursor-pointer">
                 ปิด
             </button>
 
@@ -94,7 +94,7 @@
                     $store.alertMessage.message = '<span class=\'text-green-700\'>เพิ่มแล้ว</span>';
                     $store.alert.showAlert = true;
                 "
-                class="bg-blue-500 text-white hover:bg-blue-600 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium text-xs cursor-pointer flex items-center justify-center min-w-[80px]"
+                class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 h-10 w-16 rounded-lg font-medium text-xs cursor-pointer flex items-center justify-center w-16"
             >
                 ตกลง
             </button>

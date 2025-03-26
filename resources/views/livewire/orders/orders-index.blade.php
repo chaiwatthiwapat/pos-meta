@@ -3,4 +3,5 @@
 
     @include('livewire.orders.orders-table')
     @include('livewire.orders.orders-delete')
+    @include('livewire.orders.orders-bills')
 </div>

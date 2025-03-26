@@ -88,13 +88,14 @@ class PosIndex extends Component
             }
             $totalAmount = 0;
 
-            foreach($data as $row) {
+            foreach($data as $index => $row) {
                 $product = (object) $row['product'];
                 $size = (object) $row['size'];
                 $type = (object) $row['type'];
                 $topping = (array) $row['topping'];
                 $amount = $row['amount'];
                 $totalAmount += Set::number($amount);
+                $ordersDetailId = sprintf("%s%03d", $ordersId, $index);
 
                 $toppings = collect($topping['name'])
                     ->map(function ($name, $index) use ($topping) {
@@ -121,13 +122,14 @@ class PosIndex extends Component
                         'type_price' => Set::number($type->price),
                         'quantity' => Set::number($product->qty),
                         'amount' => Set::number($amount),
+                        'orders_detail_id' => $ordersDetailId,
                         'created_at' => now()
                     ]);
 
                 foreach($toppings as $topping) {
                     DB::table(Table::$ordersTopping)
                         ->insert([
-                            'orders_id' => $ordersId,
+                            'orders_detail_id' => $ordersDetailId,
                             'topping_name' => Set::string($topping->name),
                             'topping_price' => Set::number($topping->price),
                             'created_at' => now()

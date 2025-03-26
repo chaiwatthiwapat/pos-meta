@@ -39,7 +39,7 @@
                     <td>{{ $row->size_price }}</td>
                     <td>{{ $row->type_name }}</td>
                     <td>{{ $row->type_price }}</td>
-                    <td>
+                    {{-- <td>
                         @php
                             $toppings = \DB::table(Table::$ordersTopping)
                                 ->where('orders_id', $row->orders_id)
@@ -53,7 +53,7 @@
                     <td>
                         @php $tprice = \DB::table(Table::$ordersTopping)->where('orders_id', $row->orders_id)->pluck('topping_price')->sum(); @endphp
                         {{ $tprice }}
-                    </td>
+                    </td> --}}
 
                     <td>{{ $row->quantity }}</td>
                     <td>{{ $row->amount }}</td>

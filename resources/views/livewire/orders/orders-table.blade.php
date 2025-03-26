@@ -7,7 +7,7 @@
                 <tr class="hover:bg-blue-50">
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-left font-semibold w-24">
                         <div class="w-fit">
-                            <button x-on:click="grouped = !grouped; $wire.call('setPage', 1)" class="bg-blue-500 text-white hover:bg-blue-600 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium cursor-pointer text-xs">
+                            <button x-on:click="grouped = !grouped; $wire.call('setPage', 1)" class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 h-10 w-16 rounded-lg font-medium cursor-pointer text-xs">
                                 <span x-text="grouped ? 'กลุ่ม' : 'แยก'"></span>
                             </button>
                         </div>
@@ -37,14 +37,14 @@
                         {{-- empty --}}
                     </th>
                     <th class="px-5 py-3 border-b-2 border-blue-200 bg-blue-100 text-blue-500 text-center text-xs font-semibold w-48">
-                        {{-- actions --}}
+                        {{-- excel --}}
                         <div class="flex justify-end">
                             <button wire:click="excel" type="button" wire:loading.attr="disabled"
-                                class="bg-green-500 text-white hover:bg-green-600 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium text-xs cursor-pointer flex items-center justify-center min-w-[80px]">
-                                <span wire:loading.class="hidden">
+                                class="bg-green-600 text-white hover:bg-green-700 duration-200 px-4 py-3 h-10 w-16 rounded-lg font-medium text-xs cursor-pointer flex items-center justify-center w-16">
+                                <span wire:target="excel" wire:loading.class="hidden">
                                     Excel
                                 </span>
-                                <div wire:loading class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                <div wire:loading wire:target="excel" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                             </button>
                         </div>
                     </th>
@@ -79,11 +79,11 @@
                         </td>
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
                             <div class="flex justify-end gap-1"> 
-                                <button type="button" class="bg-blue-500 text-white hover:bg-blue-600 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium cursor-pointer">
+                                <button x-on:click="$store.bills.showBills = true; $wire.call('bills', '{{ $row->orders_id }}')" type="button" class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 h-10 w-16 rounded-lg font-medium cursor-pointer">
                                     พิมพ์
                                 </button>
                                 <button x-on:click="showDelete = true; $store.delete.id = {{ $row->id }}"
-                                    class="bg-red-500 text-white hover:bg-red-600 duration-200  xxx px-4 py-3 h-10 xxx  rounded-lg font-medium cursor-pointer">
+                                    class="bg-red-500 text-white hover:bg-red-600 duration-200 px-4 py-3 h-10 w-16 rounded-lg font-medium cursor-pointer">
                                     ลบ
                                 </button>
                             </div>
@@ -132,14 +132,14 @@
                                         </p>
                                     @endif
 
-                                    @if($this->findOrdersTopping($row->orders_id)->count() > 0)
+                                    {{-- @if($this->findOrdersTopping($row->orders_id)->count() > 0)
                                         <p>
                                             <span class="font-semibold whitespace-nowrap">ท็อปปิ้ง:</span>
                                             @foreach($this->findOrdersTopping($row->orders_id) as $tprow)
                                                 <div class="pl-4">{{ $tprow->topping_name }}<span class="text-blue-500">({{ number_format($tprow->topping_price, 0) }})</span></div>
                                             @endforeach
                                         </p>
-                                    @endif
+                                    @endif --}}
                                 </div>
                             </div>
                         </td>
