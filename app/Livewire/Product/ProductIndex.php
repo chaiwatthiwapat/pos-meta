@@ -171,7 +171,8 @@ class ProductIndex extends Component
             ];
 
             if($this->image) {
-                $update = array_merge($update, ['image' => 'prodcut'.Set::newFileName($this->image)]);
+                $image = 'prodcut'.Set::newFileName($this->image);
+                $update = array_merge($update, ['image' => $image]);
             }
 
             DB::table(Table::$product)->where('id', $this->id)->update($update);

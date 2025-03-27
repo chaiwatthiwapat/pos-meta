@@ -129,6 +129,7 @@ class PosIndex extends Component
                 foreach($toppings as $topping) {
                     DB::table(Table::$ordersTopping)
                         ->insert([
+                            'orders_id' => $ordersId,
                             'orders_detail_id' => $ordersDetailId,
                             'topping_name' => Set::string($topping->name),
                             'topping_price' => Set::number($topping->price),

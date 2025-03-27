@@ -54,7 +54,7 @@ class OrdersIndex extends Component
             if($ordersId = $query?->orders_id) {
                 DB::table(Table::$orders)->where('orders_id', $ordersId)->delete();
                 DB::table(Table::$ordersDetail)->where('orders_id', $ordersId)->delete();
-                DB::table(Table::$ordersTopping)->where('orders_id', $ordersId)->delete();
+                DB::table(Table::$ordersTopping)->where('orders_detail_id', $ordersId)->delete();
                 $this->dispatch('alert', ['message' => '<div class="text-green-700">ลบสำเร็จ</div>']);
                 $this->dispatch('hidden-delete');
 
