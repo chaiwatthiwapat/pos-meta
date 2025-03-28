@@ -1,4 +1,4 @@
-<div x-data="{ showBills: false }" x-show="showBills" x-init="$store.bills = $data" style="display: none" class="fixed inset-0 flex items-center print:items-start justify-center bg-gray-900/50 z-[3000]">
+<div x-data="{ showBills: false }" x-show="showBills" x-init="$store.bills = $data" style="display: none" class="fixed inset-0 flex items-center print:items-start justify-center bg-gray-900/50 print:bg-white z-[3000]">
     {{-- Stop trying to control. --}}
 
     <div class="bg-white p-6 rounded-lg shadow-lg print:shadow-none w-full max-w-lg mx-4 relative">
@@ -52,7 +52,7 @@
                         @foreach($toppings as $trow)
                             <tr>
                                 <td class="text-left pl-5">
-                                    ประเภท: {{ $trow->topping_name }} 
+                                    ประเภท: {{ $trow->topping_name }}
                                     ({{ number_format($row->quantity, 0) }} x {{ number_format($trow->topping_price, 2) }})
                                 </td>
                                 <td class="text-right">

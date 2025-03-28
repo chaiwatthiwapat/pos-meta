@@ -40,7 +40,7 @@
                 </nav>
             @endif
 
-            <div class="flex w-screen p-1">
+            <div class="flex w-screen p-1 overflow-hidden">
                 @if(Auth::check())
                     <aside :class="showSidebar ? 'ml-0' : '-ml-64'" class="transition-all duration-200 absolute xl:relative z-[1000]">
                         @livewire('layouts.sidebar')

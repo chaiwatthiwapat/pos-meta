@@ -1,4 +1,4 @@
-<div class="w-64 h-[calc(100vh-50px)] bg-white shadow-md p-4">
+<div class="w-64 h-[100%] shadow-md p-4">
     <nav class="space-y-2 h-[90vh] overflow-auto">
         @php
             $sidebarMenus = [];
