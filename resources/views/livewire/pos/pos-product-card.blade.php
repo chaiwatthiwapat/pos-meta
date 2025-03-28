@@ -6,8 +6,8 @@
             {{ $products->links('components.paginate') }}
         </div>
 
-        <div class="h-[70vh]">
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 2xl:grid-cols-5 gap-4 items-start max-h-[70vh] overflow-auto">
+        <div class="h-[60vh]">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 2xl:grid-cols-5 gap-4 items-start max-h-[100%] overflow-auto">
                 @foreach($products as $product)
                     <div
                         x-data

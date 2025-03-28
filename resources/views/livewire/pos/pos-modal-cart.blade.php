@@ -24,7 +24,7 @@
     x-show="showCart"
     class="max-w-lg w-full bg-white p-8 rounded-lg border border-gray-200  top-[50%] left-[50%] lg:top-0 lg:left-0 translate-x-[-50%] translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 absolute lg:relative z-[2000]" style="display: none;">
     {{--  --}}
-    <div class="w-full h-[300px] lg:h-[500px] relative overflow-auto">
+    <div class="w-full h-[250px] lg:h-[500px] relative overflow-auto">
         <table class="table-fixed w-full">
             <thead class="sticky top-0">
                 <thead class="sticky top-0 bg-blue-100 shadow-md">
@@ -33,7 +33,7 @@
                         <th class="px-1 py-3 text-blue-500 text-left text-xs font-semibold w-28">สินค้า</th>
                         <th class="px-1 py-3 text-blue-500 text-right text-xs font-semibold w-24 pr-4">ราคา</th>
                         <th class="px-1 py-3 text-blue-500 text-center text-xs font-semibold w-20">จำนวน</th>
-                        <th class="px-1 py-3 text-blue-500 text-center text-xs font-semibold">ลบ</th>
+                        <th class="px-1 py-3 text-blue-500 text-center text-xs font-semibold w-20">ลบ</th>
                     </tr>
                 </thead>
             </thead>

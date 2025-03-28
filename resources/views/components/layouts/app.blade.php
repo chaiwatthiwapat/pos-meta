@@ -20,7 +20,7 @@
         @vite('resources/css/app.css')
         @livewireStyles
     </head>
-    <body class="h-screen w-screen overflow-hidden">
+    <body class="h-[100vh] w-[100vw] overflow-hidden">
 
         <div
             x-data="{ showSidebar: true }"
@@ -30,7 +30,9 @@
                 };
                 checkScreen();
                 window.addEventListener('resize', checkScreen)
-            ">
+            "
+            class="h-full"
+            >
             {{--  --}}
             @if(Auth::check())
                 <nav>
@@ -38,14 +40,14 @@
                 </nav>
             @endif
 
-            <div class="flex w-full h-[calc(100vh-50px)] overflow-hidden">
+            <div class="flex w-screen p-1">
                 @if(Auth::check())
                     <aside :class="showSidebar ? 'ml-0' : '-ml-64'" class="transition-all duration-200 absolute xl:relative z-[1000]">
                         @livewire('layouts.sidebar')
                     </aside>
                 @endif
 
-                <main class="p-6 w-full h-[calc(100vh-50px)]">
+                <main class="p-6 w-full">
                     @include('components.alert')
 
                     {{ $slot }}

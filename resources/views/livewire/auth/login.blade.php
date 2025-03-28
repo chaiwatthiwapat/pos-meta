@@ -1,7 +1,7 @@
 <div x-data="{ name: @entangle('name'), password: @entangle('password') }" class="min-h-[50vh] flex items-center justify-center">
     {{-- Nothing in the world is as soft and yielding as water. --}}
 
-    <div class="w-full max-w-lg mx-4 relative p-8 rounded-lg border border-gray-200">
+    <div class="w-full max-w-lg mx-2 lg:mx-4 relative p-8 rounded-lg border border-gray-200">
         <form wire:submit="login">
             <p class="text-gray-600 mb-4 text-center text-2xl">
                 เข้าสู่ระบบ POS
@@ -37,19 +37,19 @@
                 </div>
            </div>
 
-           <div class="flex gap-3">
-                <button type="button" x-on:click="name = 'admin'; password = 'password';" class="px-3 py-3 rounded-lg text-center text-sm cursor-pointer text-blue-500 bg-blue-100">
-                    😎 Admin
-                </button>
-                <button type="button" x-on:click="name = 'staff'; password = 'password';" class="px-3 py-3 rounded-lg text-center text-sm cursor-pointer text-green-500 bg-green-100">
-                    😎 Staff
-                </button>
-           </div>
-
             {{-- ปุ่มต่าง ๆ --}}
-            <div class="flex justify-end">
+            <div class="flex justify-between">
+                <div class="flex gap-1">
+                    <button type="button" x-on:click="name = 'admin'; password = 'password';" class="px-3 py-3 rounded-lg text-center text-xs cursor-pointer text-blue-500 bg-blue-100">
+                        😎 Admin
+                    </button>
+                    <button type="button" x-on:click="name = 'staff'; password = 'password';" class="px-3 py-3 rounded-lg text-center text-xs cursor-pointer text-green-500 bg-green-100">
+                        😎 Staff
+                    </button>
+               </div>
+
                 <button type="submit" wire:loading.attr="disabled"
-                    class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 h-10 w-16 rounded-lg font-medium text-xs cursor-pointer flex items-center justify-center w-16">
+                    class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 h-10 rounded-lg font-medium text-xs cursor-pointer flex items-center justify-center w-16">
                     <span wire:loading.class="hidden">ตกลง</span>
                     <div wire:loading class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 </button>

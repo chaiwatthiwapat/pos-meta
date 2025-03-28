@@ -1,7 +1,7 @@
 <div>
     @php use App\Traits\Set; @endphp
 
-    <div class="w-full max-h-[80vh] overflow-auto">
+    <div class="w-full h-[70vh] overflow-auto">
         <table x-data="{ showDecimal: false }" class="table-fixed w-full">
             <thead class="sticky top-0 z-[501]">
                 <tr class="hover:bg-blue-50">

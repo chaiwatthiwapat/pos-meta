@@ -1,7 +1,7 @@
 <div x-data="{ grouped: true }">
     @php use App\Traits\Set; @endphp
 
-    <div class="w-full max-h-[80vh] overflow-auto">
+    <div class="w-full h-[70vh] overflow-auto">
         <table x-data="{ showDecimal: false }" class="table-fixed w-full">
             <thead class="sticky top-0 z-[501]">
                 <tr class="hover:bg-blue-50">
@@ -78,7 +78,7 @@
                             {{-- empty --}}
                         </td>
                         <td class="px-5 py-3 border-b-2 border-blue-200 text-center text-xs font-semibold text-gray-700">
-                            <div class="flex justify-end gap-1"> 
+                            <div class="flex justify-end gap-1">
                                 <button x-on:click="$store.bills.showBills = true; $wire.call('bills', '{{ $row->orders_id }}')" type="button" class="bg-blue-500 text-white hover:bg-blue-600 duration-200 px-4 py-3 h-10 w-16 rounded-lg font-medium cursor-pointer">
                                     พิมพ์
                                 </button>
