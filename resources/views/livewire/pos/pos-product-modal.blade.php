@@ -46,7 +46,7 @@
             </p>
 
             <div class="flex gap-4 p-4 bg-white rounded-lg shadow-lg">
-                <div class="w-24 h-24 overflow-hidden rounded-lg border border-gray-200  border-gray-200 shadow-md flex items-center justify-center">
+                <div class="w-24 h-24 overflow-hidden rounded-lg border border-gray-200  shadow-md flex items-center justify-center">
                     <img class="w-full h-full object-cover" src="{{ asset('storage/product-images/' . ($productData?->image ?? 'default.png')) }}" alt="pos product">
                 </div>
 

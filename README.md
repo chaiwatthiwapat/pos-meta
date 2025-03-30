@@ -3,6 +3,7 @@
 1. รันคำสั่ง Terminal:
 
 ```shell script
+$ php artisan key:generate
 $ composer install
 $ npm install
 ```
