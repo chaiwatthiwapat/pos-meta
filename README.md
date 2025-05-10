@@ -30,9 +30,5 @@ php artisan config:clear
 php artisan cache:clear
 php artisan route:clear
 php artisan view:clear
-```
-
-7. หรือ
-```shell script
 php artisan optimize:clear
-```
+
